@@ -2,13 +2,15 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import MyVoucher from "../pages/secure/myVoucher.vue";
 import About from "../pages/About.vue";
+import Start from "../pages/Start.vue";
+import AdditinalUsers from "../pages/additional.vue";
 
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/user-wallet",
+    path: "/my-wallet",
     name: "MyVoucher",
     component: MyVoucher,
     meta: {
@@ -26,12 +28,12 @@ const routes = [
   {
     path: "/",
     name: "Start",
-    component: () => import("../pages/Start.vue"),
+    component: Start,
   },
   {
     path: "/register-additional",
     name: "registerBusinessAdditional",
-    component: () => import("../pages/additional.vue"),
+    component: AdditinalUsers,
     meta: {
       requiresAuth: true
     }

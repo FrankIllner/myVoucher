@@ -2,7 +2,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1">
-        <h3>Trage Deine privaten Gutscheine ein - damit du nie die Übersicht verlierst</h3>
+        <h3 v-if="this.register.usertype=='register'">{{this.register.infoCustomer}}</h3>
+        <h3 v-else>{{this.register.infoBusiness}}</h3>
         <form
           class="text-center border border-primary p-5"
           style="margin-top:70px;height:auto;padding-top:100px !important;"
@@ -37,7 +38,7 @@
           <!-- was fuer eine Anmaldung User/Business-User -->
           <input
             type="text"
-            id="type"
+            id="usertype"
             class="form-control mb-5"
             v-model="register.usertype"
             required
@@ -72,7 +73,9 @@ export default {
         name: "",
         email: "",
         password: "",
-        usertype: this.$route.name
+        usertype: this.$route.name,
+        infoCustomer:  'Melde Dich an und speichere Deine ganzen Papier Gutscheine in die App! ',
+        infoBusiness: 'Werde Partner bei uns und verdiene mit den Verkauf....'
       }
     };
   },
@@ -81,7 +84,6 @@ export default {
     async registerUser() {
       try {
         let response = await this.$http.post("user/register", this.register);
-        console.log(response);
         let token = response.data.token;
       
         if (token) {

@@ -71,7 +71,7 @@ export default {
           if (userType == 'registerBusiness') {
              this.$router.push("/register-additional");
           } else {
-             this.$router.push("/user-wallet/");
+             this.$router.push("/my-wallet/");
           }
          
         }

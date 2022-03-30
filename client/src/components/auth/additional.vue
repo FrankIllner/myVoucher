@@ -113,17 +113,15 @@ export default {
         let userId = this.user._id;
         this.registerB.userId = userId;
     
-   
         let response = await this.$http.post("/user/registerBusiness", this.registerB, {headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
           }},
         );
     
-      
+        console.log(response);
         if (response) {
-         
-          this.$router.push("/my-voucher");
+          this.$router.push("/my-wallet");
           swal("Success", "Registration Was successful", "success");
 
         } else {
