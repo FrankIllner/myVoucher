@@ -18,7 +18,9 @@ exports.addvoucher = async (req, res) => {
       name: req.body.name,
       price: req.body.price,
       fromPerson: req.body.fromPerson,
-      file1: req.body.file1
+      file1: req.body.file1,
+      userId: req.body.userId
+
     });
     let data = await voucher.save();
 

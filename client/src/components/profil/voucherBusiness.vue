@@ -60,7 +60,8 @@ export default {
         ],
         expiryDate: '',
         name: "",
-        price: ""
+        price: "",
+        userId: ""
       }
     };
   },
@@ -69,8 +70,9 @@ export default {
       try {
         let token = localStorage.getItem("jwt");
         let decoded = VueJwtDecode.decode(token);
-         console.log( this.voucher);
         this.user = decoded;
+        let userId = this.user._id;
+        this.voucher.userId = userId;
    
         let response = await this.$http.post("/voucher/addBusinessVoucher", this.voucher, {headers: {
             'Authorization': 'Bearer ' + token,

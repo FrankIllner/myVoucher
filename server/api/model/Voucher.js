@@ -18,7 +18,10 @@ const voucherSchema = mongoose.Schema({
     type: String
   },
   file1: {
-    type: Object
+    type: Array
+  },
+  userId: {
+    type: String
   }
 });
 

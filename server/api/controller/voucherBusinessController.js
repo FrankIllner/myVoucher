@@ -15,6 +15,7 @@ exports.addBusinessVoucher = async (req, res) => {
       expiryDate: req.body.expiryDate,
       name: req.body.name,
       price: req.body.price,
+      userId: req.body.userId
     });
     let data = await voucherbusiness.save();
     res.status(201).json({ data });

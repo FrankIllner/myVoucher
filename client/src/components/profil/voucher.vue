@@ -38,14 +38,21 @@
             v-model="voucher.fromPerson"
           />
 
+         <upload />
+
+          <!--
+          <div>
           <b-form-file
             v-model="voucher.file1"
+            type="file"
             id="file1"
-            :state="Boolean(voucher.file1)"
             placeholder="Fotografiere und hoch laden"
             drop-placeholder="Wähle ..."
+            @change="selectFile( )"
           ></b-form-file>
-          <div class="mt-3">Selected file: {{ voucher.file1 ? voucher.file1.name : '' }}</div>
+           <a v-on:click="sendFile( )">Submit</a>
+          </div>
+          -->
          
           <p>
             <center>
@@ -56,6 +63,9 @@
           </p>
            
         </b-form>
+
+    
+
       </div>
     </div>
   </div>
@@ -64,8 +74,9 @@
 <script>
 import swal from "sweetalert";
 import VueJwtDecode from "vue-jwt-decode";
-
+import Upload from '../forms/upload.vue'
 export default {
+  components: { Upload },
   data() {
     return {
       voucher: {
@@ -76,11 +87,12 @@ export default {
           { value: '2', text: 'Bücher' },
           { value: '3', text: 'Kultur' },
         ],
-        expiryDate: '',
+        expiryDate: "",
         name: "",
         price: "",
         fromPerson: "",
-        file1: null
+        file1: []
+        //file1: null
       }
     };
   },
@@ -89,10 +101,10 @@ export default {
       try {
         let token = localStorage.getItem("jwt");
         let decoded = VueJwtDecode.decode(token);
-       
+         
         this.user = decoded;
    
-        let response = await this.$http.post("/voucher/addUserVoucher", this.voucher, {headers: {
+        let response = await this.$http.post("/voucher/addUsersVoucher", this.voucher, {headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
           }},
@@ -102,6 +114,7 @@ export default {
         // Todo pruefen ob response ok ist
         if (response) {
           swal("Success", "Voucher - Registration Was successful", "success");
+          this.$root.$refs.Upload.sendFile();
 
         } else {
           swal("Error", "Gutschein - Error2", "Error");
@@ -110,13 +123,16 @@ export default {
         swal("Error", "Gutschein - Error1", "error");
         console.log(err.response);
       }
-    }
+    },
+
+
   },
    created() {
         let token = localStorage.getItem("jwt");
         let decoded = VueJwtDecode.decode(token);
         this.user = decoded;
-    }
+    },
+
 };
 </script>
 
