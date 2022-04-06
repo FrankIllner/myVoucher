@@ -13,6 +13,9 @@ const voucherBusinessSchema = mongoose.Schema({
   },
   expiryDate: {
     type: String
+  },
+  userId: {
+    type: String
   }
 });
 
