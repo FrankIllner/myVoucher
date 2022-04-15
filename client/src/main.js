@@ -11,6 +11,7 @@ import "../src/assets/scss/app.scss"
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
+
 const base = axios.create({
   baseURL: "http://localhost:4000"
 });

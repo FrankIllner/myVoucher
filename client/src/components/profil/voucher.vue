@@ -38,21 +38,7 @@
             v-model="voucher.fromPerson"
           />
 
-         <upload />
-
-          <!--
-          <div>
-          <b-form-file
-            v-model="voucher.file1"
-            type="file"
-            id="file1"
-            placeholder="Fotografiere und hoch laden"
-            drop-placeholder="Wähle ..."
-            @change="selectFile( )"
-          ></b-form-file>
-           <a v-on:click="sendFile( )">Submit</a>
-          </div>
-          -->
+        <MultipleUpload />
          
           <p>
             <center>
@@ -64,8 +50,6 @@
            
         </b-form>
 
-    
-
       </div>
     </div>
   </div>
@@ -74,9 +58,10 @@
 <script>
 import swal from "sweetalert";
 import VueJwtDecode from "vue-jwt-decode";
-import Upload from '../forms/upload.vue'
+//import Upload from '../forms/upload.vue';
+import MultipleUpload from '../forms/multipleUpload.vue';
 export default {
-  components: { Upload },
+  components: { MultipleUpload },
   data() {
     return {
       voucher: {
@@ -91,8 +76,8 @@ export default {
         name: "",
         price: "",
         fromPerson: "",
-        file1: []
-        //file1: null
+        file1: [],
+        userId: ""
       }
     };
   },
@@ -100,10 +85,29 @@ export default {
     async addvoucher() {
       try {
         let token = localStorage.getItem("jwt");
-        let decoded = VueJwtDecode.decode(token);
-         
-        this.user = decoded;
-   
+      
+        // Komponente forms/multipleUpload Methode Aufruf Callback //!! Umbennen
+        let filename =  this.$root.$refs.MultipleUploads.selectFile();
+
+        // user ID primary Key hinterlegen
+        this.voucher.userId  = this.user._id;
+
+        // eindeutigen Bildnamen generieren
+        var d = new Date();
+        var tag = d.getDate();
+        var monat = d.getMonth() + 1;
+        var jahr = d.getFullYear();
+        var stunde = d.getHours();
+        let currrentDate = tag+monat+jahr+stunde;
+      
+        // Bildnamen hinzufügen multiple
+        filename.forEach((value, index) => {
+          console.log(value);
+          console.log(index);
+          let cryptFilename = currrentDate + '-' + value.name;
+          this.voucher.file1.push(cryptFilename);
+        });
+        
         let response = await this.$http.post("/voucher/addUsersVoucher", this.voucher, {headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
@@ -114,8 +118,8 @@ export default {
         // Todo pruefen ob response ok ist
         if (response) {
           swal("Success", "Voucher - Registration Was successful", "success");
-          this.$root.$refs.Upload.sendFile();
-
+          // Single MultipleUpload
+          this.$root.$refs.MultipleUploads.sendFile();
         } else {
           swal("Error", "Gutschein - Error2", "Error");
         }

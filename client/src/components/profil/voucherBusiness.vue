@@ -53,10 +53,10 @@ export default {
       voucher: {
         selectedCategory: null,
          options: [
-          { value: null, text: 'Um welchen Gutschein Kategorie handelt es sich' },
-          { value: '1', text: 'Massage' },
-          { value: '2', text: 'Bücher' },
-          { value: '3', text: 'Kultur' },
+          { value: null, text: 'Wählen Sie ein Gutschein Layout' },
+          { value: '1', text: 'Dark' },
+          { value: '2', text: 'Light' },
+          { value: '3', text: 'normal' },
         ],
         expiryDate: '',
         name: "",
@@ -69,8 +69,6 @@ export default {
     async addBusinessVoucher() {
       try {
         let token = localStorage.getItem("jwt");
-        let decoded = VueJwtDecode.decode(token);
-        this.user = decoded;
         let userId = this.user._id;
         this.voucher.userId = userId;
    
@@ -83,7 +81,6 @@ export default {
         //let token = response.data.token;
         if (response) {
           swal("Success", "Voucher - wurde anglegt", "success");
-
         } else {
           swal("Error", "Gutschein - Error2", "Error");
         }

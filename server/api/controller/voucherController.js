@@ -26,7 +26,18 @@ exports.addvoucher = async (req, res) => {
 
     res.status(201).json({ data });
   } catch (err) {
-    console.log('vocuherController - false')
+
     res.status(400).json({ err: err });
   }
 };
+exports.getAllVouchers = async (req, res) => {
+  try {
+    let data = await Voucher.findAllVouchers();
+    res.status(201).json({ data });
+  } catch (err) {
+    console.log('voucherController - false')
+    res.status(400).json({ err: err });
+  }
+};
+
+

@@ -46,7 +46,7 @@ const routes = [
   },
   {
     path: "/register",
-    name: "registerClient",
+    name: "registerCustomer",
     component: () => import("../pages/register.vue"),
     props: {user: 'user'}
   },
