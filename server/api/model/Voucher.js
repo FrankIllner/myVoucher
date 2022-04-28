@@ -41,9 +41,9 @@ voucherSchema.statics.findByCredentials = async (name) => {
   return voucher;
 };
 
-// die Methode gibt alle Business Gutscheine zurück
-voucherSchema.statics.findAllVouchers = async () => {
-  const allVouchers = await Voucher.find();
+// die Methode gibt alle privaten Gutscheine eines Users zurück
+voucherSchema.statics.findAllVouchers = async (current_id) => {
+  const allVouchers = await Voucher.find({"userId": current_id});
   if (!allVouchers) {
     throw new Error({ error: "kein Gutschein gefunden - mit diesem Namen" });
   }

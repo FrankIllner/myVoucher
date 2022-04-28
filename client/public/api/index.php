@@ -22,7 +22,7 @@ if(isset($_FILES['files']['name'])){
           $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
           // Valid extensions
-          $valid_ext = array("png","jpeg","jpg","pdf","txt","doc","docx");
+          $valid_ext = array("png","jpeg","jpg","pdf");
 
           // Check extension
           if(in_array($ext, $valid_ext)){

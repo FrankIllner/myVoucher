@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import MyVoucher from "../pages/secure/myVoucher.vue";
 import About from "../pages/About.vue";
 import Start from "../pages/Start.vue";
+import MyCompany from "../pages/myCompany.vue";
 import AdditinalUsers from "../pages/additional.vue";
 
 
@@ -18,12 +19,14 @@ const routes = [
     }
   },
   {
+    path: "/company/:id",
+    name: "MyCompnay",
+    component: MyCompany
+  },
+  {
     path: "/about",
     name: "about",
-    component: About,
-    meta: {
-      requiresAuth: true
-    }
+    component: About
   },
   {
     path: "/",

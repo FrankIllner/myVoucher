@@ -10,11 +10,11 @@
                     <b-nav-item href="/my-wallet">Dein Wallet</b-nav-item>
                 </b-navbar-nav>
 
-            <!-- Right aligned nav items -->
+                <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item class="highligting" href="/register-business">Partner werden</b-nav-item>
                     <b-nav-item-dropdown text="Lang" right>
-                    <b-dropdown-item href="#">EN</b-dropdown-item>
+                        <b-dropdown-item href="#">EN</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item-dropdown right>
@@ -38,18 +38,21 @@
 </template>
 
 <script>
+import VueJwtDecode from "vue-jwt-decode";
 export default {
-
   methods: {
-   logUserOut() {
-      localStorage.removeItem("jwt");
-      this.$router.push("/");
-    }
-  }
+    logUserOut() {
+        localStorage.removeItem("jwt");
+        this.$router.push("/");
+        }
+    },
+    created() {
+        let token = localStorage.getItem("jwt");
+        let decoded = VueJwtDecode.decode(token);
+        this.user = decoded;
+    },
 };
 </script>
-
-
 
 <style lang="scss">
     nav .logo img {

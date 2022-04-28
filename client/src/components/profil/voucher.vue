@@ -87,7 +87,7 @@ export default {
         let token = localStorage.getItem("jwt");
       
         // Komponente forms/multipleUpload Methode Aufruf Callback //!! Umbennen
-        let filename =  this.$root.$refs.MultipleUploads.selectFile();
+        let filename =  this.$root.$refs.MultipleUploads.validateFiles();
 
         // user ID primary Key hinterlegen
         this.voucher.userId  = this.user._id;

@@ -25,12 +25,21 @@ const userBusinessSchema = mongoose.Schema({
     type: String,
     required: [true, "Please Include your Phone"]
   },
+  opening: {
+    type: String,
+  },
   businessNo: {
     type: String,
     required: [true, "Please Include your businessNo"]
   },
   userId: {
     type: String
+  },
+  aboutus: {
+    type: String,
+  },
+  file1: {
+    type: Array
   },
 
 });
@@ -54,6 +63,39 @@ userBusinessSchema.statics.findByCredentials = async (businessNo) => {
  
   return userBusiness;
 };
+
+// die Methode gibt alle Companies zurück
+userBusinessSchema.statics.findAllBusiness = async () => {
+  const allBusinessPartner = await UserBusiness.find();
+  if (!allBusinessPartner) {
+    throw new Error({ error: "keine Unternhemen gefunden" });
+  }
+ 
+  return allBusinessPartner;
+};
+
+// die Methode gibt eine Company zurück
+userBusinessSchema.statics.findOneCompany = async (id) => {
+
+  const companyInfos = await UserBusiness.find({_id: id});
+  if (!companyInfos) {
+    throw new Error({ error: "keine Unternhemen gefunden" });
+  }
+  return companyInfos;
+};
+
+// pruefen ob Zusatzinfos hinterlegt sind 
+userBusinessSchema.statics.findAdditonalInfo = async (id) => {
+  console.log('------------findAdditonalInfo----------')
+  console.log(id);
+  const hasCompanyInfos = await UserBusiness.find({_id: id});
+  console.log(hasCompanyInfos.length);
+  if (hasCompanyInfos.length === 1) {
+    return true;    
+  }
+  return false;
+};
+
 
 
 const UserBusiness = mongoose.model("UserBusiness", userBusinessSchema);

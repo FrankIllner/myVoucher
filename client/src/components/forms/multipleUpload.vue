@@ -57,6 +57,8 @@ export default {
 
         selectFile(){
             const files = this.$refs.files.files;
+     
+            if (files === "") return;
             this.uploadFiles = [...this.uploadFiles, ...files];
 
             this.files = [
@@ -77,7 +79,7 @@ export default {
             const MAX_SIZE = 200000;
 
             if (file.size > MAX_SIZE) {
-                return `Max Größe: ${MAX_SIZE/1000}Kb`;
+                return `Das Bild ist zu Groß - es sind max: ${MAX_SIZE/1000}Kb möglich`;
             }
             if (!allowedTypes.includes(file.type)) {
                 return  "kein Bild!"
@@ -100,9 +102,10 @@ export default {
             })
             .then(function (response) {
                 console.log(response);
-                if(!response.data){
+                if (!response.data) {
                     alert('Sorry File not uploaded.');
-                }else{
+                } else {
+        
                     alert('Your Vuejs with PHP File uploaded successfully.');
                 }
 

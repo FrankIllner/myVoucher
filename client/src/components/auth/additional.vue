@@ -57,6 +57,14 @@
             v-model="registerB.phone"
             required
           />
+          <textarea
+            type="textarea"
+            id="opening"
+            class="form-control mb-5"
+            placeholder="Öffnungszeiten"
+            v-model="registerB.opening"
+            required
+          />
           <input
             type="text"
             id="businessNo"
@@ -65,20 +73,26 @@
             v-model="registerB.businessNo"
             required
           />
+          <textarea
+            type="textarea"
+            id="aboutus"
+            class="form-control mb-5"
+            placeholder="Bescheibe dein Unternehmen bzw. Geschäft"
+            v-model="registerB.aboutus"
+            required
+          />
+
+          <MultipleUpload />
 
           <p>
-            <!-- Sign in button -->
+            <!-- Speichern in button -->
             <center>
               <button class="btn btn-primary btn-block w-75 my-4" type="submit">
-                Sign in
+                Speichern
               </button>
             </center>
           </p>
 
-          <div>
-            <p>Sind Sie bei uns schon Partner? Wenn ja, dann Log Dich hier ein!</p>
-            <router-link to="/">Klicke hier!</router-link>
-          </div>
         </form>
       </div>
     </div>
@@ -88,8 +102,9 @@
 <script>
 import swal from "sweetalert";
 import VueJwtDecode from "vue-jwt-decode";
-
+import MultipleUpload from '../forms/multipleUpload.vue';
 export default {
+  components: { MultipleUpload },
   data() {
     return {
       registerB: {
@@ -99,8 +114,11 @@ export default {
         postcode: "",
         city: "",
         phone: "",
+        opening: "",
         businessNo: "",
-        userId: ""
+        userId: "",
+        aboutus: "",
+        file1: [],
       }
     };
   },
@@ -112,30 +130,44 @@ export default {
         this.user = decoded;
         let userId = this.user._id;
         this.registerB.userId = userId;
-    
+
+        // Komponente forms/multipleUpload Methode Aufruf Callback //!! Umbennen
+        let filename =  this.$root.$refs.MultipleUploads.validateFiles();
+   
+        // eindeutigen Bildnamen generieren
+        var d = new Date();
+        var tag = d.getDate();
+        var monat = d.getMonth() + 1;
+        var jahr = d.getFullYear();
+        var stunde = d.getHours();
+        let currrentDate = tag+monat+jahr+stunde;
+      
+        // Bildnamen hinzufügen multiple
+        filename.forEach((value, index) => {
+          console.log(value);
+          console.log(index);
+          let cryptFilename = currrentDate + '-' + value.name;
+          this.registerB.file1.push(cryptFilename);
+        });
+        
         let response = await this.$http.post("/user/registerBusiness", this.registerB, {headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
           }},
         );
-    
+        
         console.log(response);
+       
         if (response) {
           this.$router.push("/my-wallet");
-          swal("Success", "Registration Was successful", "success");
+          swal("Success", "Zusatzinfos wurden gepseichert", "success");
 
         } else {
-          swal("Error", "Something Went Wrong", "Error");
+          swal("Error", "Zusatzinfos Fehler beim speichern", "Error");
         }
       } catch (err) {
-        let error = err.response;
-     
-         swal("Error", error.data.message, "error");
-        if (error.status == 409) {
-          swal("Error", error.data.message, "error");
-        } else {
-          swal("Error", error.data.err.message, "error");
-        }
+        swal("Error", "Zusatzinfos - Error1", "error");
+        console.log(err.response);
       }
     }
   }

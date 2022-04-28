@@ -1,41 +1,58 @@
 <template>
   <div>
     <section>
-      <div class="container mt-5">
+      <div class="container voucher-overview mt-5">
         <div class="row">
           <div class="col-md-12">
-            <ul class="list-group cards">
-              <h2>Alle Gutscheine</h2>
-              {{ this.allVouchers }}
-              <li v-for="voucher in allVouchers" :key="voucher._id" class="list-group-item">
-                <b>{{voucher.name}}</b>
-                <span>{{voucher.price}}</span>
-                <span>{{voucher.fromPerson}}</span>
-                <span>{{voucher.expiryDate}}</span>
-                <span v-for="file in voucher.file1" :key="file">
-        
-               
-                 <img :src="`http://localhost:8080/api/uploads/${file}`"/>
-    
-                </span>
-              </li>
+            <div>
+              <h2>Gutschein kaufen</h2>
            
-            </ul>
+              <div class="group cards row">
+                <div v-for="business in allBusiness" :key="business._id" class="col-xs-12 col-sm-6 col-md-4">
+                  <router-link :to="'/company/' + business._id">
+                  <div class="item">
+                  <p><b>{{business.company}}</b></p>
+                  <span>{{business.street}} {{business.streetNo}}</span><br />
+                  <span>{{business.postcode}} {{business.city}}</span><br />
+                  <span>{{business.phone}}</span><br />
+                  <span>{{business.businessNo}}</span><br />
+                <!-- <div v-for="file in voucher.file1" :key="file">
+                    <img :src="`http://localhost:8080/api/uploads/${file}`"/>
+                  </div>
+                  -->
+                  </div>
+                  </router-link>
+                </div>
+            
+              </div>
+            </div>
 
-
-            <ul class="list-group">
+            <div class="mt-5">
               <h2>Meine Gutscheine</h2>
-              <li class="list-group-item">Name : {{ user.name }}</li>
-              <li class="list-group-item">Email : {{ user.email }} </li>
-            </ul>
-
-            <li>{{ user.usertype }}</li>
-            <div v-if="user.usertype=='registerBusiness'">
+              <div class="group cards row">
+               
+                <div v-for="voucher in allVouchers" :key="voucher._id" class="col-xs-12 col-sm-6 col-md-4">
+                  <div class="item">
+                    <p><b>{{voucher.name}}</b></p>
+                    <span><label>Gutschein-Wert: </label> {{voucher.price}}€</span><br />
+                    <span><label>Bekommen von: </label>{{voucher.fromPerson}}</span><br />
+                    <span><label>Gutschein läuft am </label> {{voucher.expiryDate}} ab</span>
+                    <VueSlickCarousel v-bind="settings">
+                      <div v-for="file in voucher.file1" :key="file">
+                            <img :src="`http://localhost:8080/api/uploads/${file}`"/>
+                      </div>
+                    </VueSlickCarousel>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+            <div class="mt-5" v-if="user.usertype=='registerBusiness'">
               <p>Füge weitere Gutscheine von deinem Unternehmen hinzu!</p>
               <router-link to="/add-business-voucher">Klicke hier!</router-link>
             </div>
             
-            <div v-else>
+            <div class="mt-5" v-else>
               <p>Füge weitere deiner privaten Gutscheine hinzu!</p>
               <router-link to="/add-user-voucher">Klicke hier!</router-link>
             </div>
@@ -49,30 +66,62 @@
 </template>
 <script>
 import VueJwtDecode from "vue-jwt-decode";
+import VueSlickCarousel from 'vue-slick-carousel'
+// optional style for arrows & dots
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+
 export default {
+  name: 'AllVouchers',
+  components: {VueSlickCarousel},
   data() {
     return {
       user: {},
       allVouchers: [],
-      publicPath: process.env.BASE_URL
+      allBusiness: [],
+      settings: {
+        arrows: true,
+        dots: true,
+        slidesToShow : 1,
+        slidesToScroll : 1
+      },
     };
   },
   methods: {
-   async getUserDetails() {
+   async getUserVoucherDetails() {
       let token = localStorage.getItem("jwt");
       let decoded = VueJwtDecode.decode(token);
       this.user = decoded;
-
+  
       try {
-        let response = await this.$http.post("/voucher/getAllVouchers", {}, {headers: {
+        let response = await this.$http.post("/voucher/getAllVouchers",  {}, {headers: {
               'Authorization': 'Bearer ' + token,
               'Content-Type': 'application/json',
             }},
         );
         if (response) {
-          console.log('test');
-          console.log(response.data.data);
+         
           this.allVouchers = response.data.data;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+    },
+    async getAllBusiness() {
+      let token = localStorage.getItem("jwt");
+      let decoded = VueJwtDecode.decode(token);
+      this.user = decoded;
+
+      try {
+        let response = await this.$http.post("/user/getAllBusiness", {}, {headers: {
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/json',
+            }},
+        );
+        if (response) {
+     
+          this.allBusiness = response.data.data;
         }
       } catch (err) {
         console.log(err);
@@ -82,9 +131,26 @@ export default {
   },
 
   async created() {
-    console.log('Home.vue');
-    this.getUserDetails();
+    this.getUserVoucherDetails();
+    this.getAllBusiness();
   }
 };
 </script>
+
+<style>
+  .voucher-overview .group img {
+    width: 100%;
+    height: auto;
+  }
+  .voucher-overview .slick-prev:before, .voucher-overview .slick-next:before {
+    color: blueviolet !important;
+  }
+  .voucher-overview .cards .item {
+    border: 1px solid #CCC;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px 3px;
+    margin: 5px;
+    padding: 10px;
+  }
+</style>
 

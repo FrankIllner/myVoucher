@@ -30,9 +30,12 @@ exports.addvoucher = async (req, res) => {
     res.status(400).json({ err: err });
   }
 };
+// alle Gutscheine eines Users
 exports.getAllVouchers = async (req, res) => {
+  console.log(req.userData._id);
+  let current_id = req.userData._id;
   try {
-    let data = await Voucher.findAllVouchers();
+    let data = await Voucher.findAllVouchers(current_id);
     res.status(201).json({ data });
   } catch (err) {
     console.log('voucherController - false')

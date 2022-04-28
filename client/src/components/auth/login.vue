@@ -63,12 +63,21 @@ export default {
         let response = await this.$http.post("/user/login", this.login);
         let token = response.data.token;
         let userType = response.data.user.usertype;
-
+        
+  
         localStorage.setItem("jwt", token);
+
         if (token) {
-          
           swal("Success", "Login Successful", "Error");
-          if (userType == 'registerBusiness') {
+
+          let hasAdditional = await this.$http.post("/user/checkAdditional", {}, {headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+              }},
+          );
+          let bool_hasAdditional = hasAdditional.data.hasAdditional;
+          console.log(bool_hasAdditional);
+          if (userType == 'registerBusiness' && !bool_hasAdditional) {
              this.$router.push("/register-additional");
           } else {
              this.$router.push("/my-wallet/");

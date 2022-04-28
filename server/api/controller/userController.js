@@ -45,11 +45,11 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-
 // @desc Login
 // @route POST /me
 // @access Private
 exports.getUserDetails = async (req, res) => {
   await res.json(req.userData);
 };
+
 
