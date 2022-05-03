@@ -140,13 +140,14 @@ export default {
         var monat = d.getMonth() + 1;
         var jahr = d.getFullYear();
         var stunde = d.getHours();
-        let currrentDate = tag+monat+jahr+stunde;
+        var minuten = d.getMinutes();
+        let currentDate = tag+monat+jahr+stunde+minuten;
       
         // Bildnamen hinzufügen multiple
         filename.forEach((value, index) => {
           console.log(value);
           console.log(index);
-          let cryptFilename = currrentDate + '-' + value.name;
+          let cryptFilename = currentDate + '-' + value;
           this.registerB.file1.push(cryptFilename);
         });
         
@@ -156,12 +157,12 @@ export default {
           }},
         );
         
-        console.log(response);
        
         if (response) {
           this.$router.push("/my-wallet");
           swal("Success", "Zusatzinfos wurden gepseichert", "success");
-
+          // Lade Bilder in den public Ordner
+          this.$root.$refs.MultipleUploads.sendFile();
         } else {
           swal("Error", "Zusatzinfos Fehler beim speichern", "Error");
         }

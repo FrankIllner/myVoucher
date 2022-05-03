@@ -10,6 +10,7 @@ import "../src/assets/scss/app.scss"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.prototype.$isLogin = false;
 
 
 const base = axios.create({
@@ -18,6 +19,11 @@ const base = axios.create({
 
 Vue.prototype.$http = base;
 Vue.config.productionTip = false;
+
+let token = localStorage.getItem("jwt");
+if (token) {
+  Vue.prototype.$isLogin = true;
+} 
 
 new Vue({
   router,

@@ -4,12 +4,7 @@ const VoucherBusiness = require("../model/VoucherBusiness");
 // Todo QR Coder generieren
 exports.addBusinessVoucher = async (req, res) => {
   try {
-    let isVoucher = await VoucherBusiness.find({ name: req.body.name });
-    if (isVoucher.length >= 1) {
-      return res.status(409).json({
-        message: "Sie haben einen Gutschein mit gleichem Namen!"
-      });
-    }
+
     const voucherbusiness = new VoucherBusiness({
       selectedCategory: req.body.selectedCategory,
       expiryDate: req.body.expiryDate,
@@ -21,6 +16,17 @@ exports.addBusinessVoucher = async (req, res) => {
     res.status(201).json({ data });
   } catch (err) {
     console.log('voucherController - false')
+    res.status(400).json({ err: err });
+  }
+};
+// Voucher auselen
+exports.getVoucher = async (req, res) => {
+  let current_id =  req.body.userid;
+  try {
+    let dataVouchers = await VoucherBusiness.findVouchers(current_id);
+    console.log(dataVouchers);
+    res.status(201).json({ dataVouchers });
+  } catch (err) {
     res.status(400).json({ err: err });
   }
 };

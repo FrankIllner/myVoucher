@@ -98,13 +98,14 @@ export default {
         var monat = d.getMonth() + 1;
         var jahr = d.getFullYear();
         var stunde = d.getHours();
-        let currrentDate = tag+monat+jahr+stunde;
+        var minuten = d.getMinutes();
+        let currrentDate = tag+monat+jahr+stunde+minuten;
       
         // Bildnamen hinzufügen multiple
         filename.forEach((value, index) => {
           console.log(value);
           console.log(index);
-          let cryptFilename = currrentDate + '-' + value.name;
+          let cryptFilename = currrentDate + '-' + value;
           this.voucher.file1.push(cryptFilename);
         });
         

@@ -35,5 +35,18 @@ voucherBusinessSchema.statics.findByCredentials = async (name) => {
   return VoucherBusiness;
 };
 
+
+// die Methode gibt alle Vochers eines Kunden zurück
+voucherBusinessSchema.statics.findVouchers = async (user_id) => {
+
+  const allVouchers = await VoucherBusiness.find({"userId": user_id});
+
+  if (!allVouchers) {
+    throw new Error({ error: "keine Gutscheine gefunden" });
+  }
+ 
+  return allVouchers;
+};
+
 const VoucherBusiness = mongoose.model("VoucherBusiness", voucherBusinessSchema);
 module.exports = VoucherBusiness;

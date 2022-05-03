@@ -9,18 +9,15 @@
            
               <div class="group cards row">
                 <div v-for="business in allBusiness" :key="business._id" class="col-xs-12 col-sm-6 col-md-4">
-                  <router-link :to="'/company/' + business._id">
-                  <div class="item">
-                  <p><b>{{business.company}}</b></p>
-                  <span>{{business.street}} {{business.streetNo}}</span><br />
-                  <span>{{business.postcode}} {{business.city}}</span><br />
-                  <span>{{business.phone}}</span><br />
-                  <span>{{business.businessNo}}</span><br />
-                <!-- <div v-for="file in voucher.file1" :key="file">
-                    <img :src="`http://localhost:8080/api/uploads/${file}`"/>
-                  </div>
-                  -->
-                  </div>
+                  <router-link :to="'/company/' + business._id + '/userid/' + business.userId">
+                    <div class="item">
+                      <p><b>{{business.company}}</b></p>
+                      <span>{{business.street}} {{business.streetNo}}</span><br />
+                      <span>{{business.postcode}} {{business.city}}</span><br />
+                      <span>{{business.phone}}</span><br />
+                      <span>{{business.businessNo}}</span><br />
+                       <span>{{business.userId}}</span><br />
+                    </div>
                   </router-link>
                 </div>
             
@@ -100,7 +97,7 @@ export default {
             }},
         );
         if (response) {
-         
+           console.log(response);
           this.allVouchers = response.data.data;
         }
       } catch (err) {
@@ -119,8 +116,8 @@ export default {
               'Content-Type': 'application/json',
             }},
         );
+       
         if (response) {
-     
           this.allBusiness = response.data.data;
         }
       } catch (err) {

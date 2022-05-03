@@ -4,10 +4,10 @@
             <b-navbar-brand class="logo" href="/"><img src="../../../assets/img/logo.png"></b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
+          {{this.$isLogin}}
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
-                    <b-nav-item href="/my-wallet">Dein Wallet</b-nav-item>
+                    <b-nav-item href="/my-wallet">Alle Angebote/Wallet</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
@@ -20,7 +20,7 @@
                     <b-nav-item-dropdown right>
                     <!-- Using 'button-content' slot -->
                     <template #button-content>
-                        <b>User</b>
+                        <b>User {{username}} </b>
                     </template>
                     <b-dropdown-item href="/add-business-voucher">Busniness Partner! Dein Gutschein hier hinterlgen</b-dropdown-item>
                     <b-dropdown-item href="/add-user-voucher">Normaler User! Dein Gutschein hier hinterlgen</b-dropdown-item>
@@ -28,7 +28,7 @@
                     <b-dropdown-item href="/profile">Dein Profile</b-dropdown-item>
                     <b-dropdown-item href="/verwaltung">Verwaltung</b-dropdown-item>
 
-                    <b-dropdown-item @click="logUserOut" href="#">Logout</b-dropdown-item>
+                    <b-dropdown-item @click="logUserOut" href="#">{{isLogin}}</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-collapse>
@@ -40,17 +40,36 @@
 <script>
 import VueJwtDecode from "vue-jwt-decode";
 export default {
-  methods: {
-    logUserOut() {
-        localStorage.removeItem("jwt");
-        this.$router.push("/");
+    data() {
+        return { 
+            isLogin: ''
+        }
+    },
+    methods: {
+        logUserOut() {
+            localStorage.removeItem("jwt");
+            this.$router.push("/");
+            location.reload();
+        },
+        checklogin () {
+        
+          if (this.$isLogin) {
+            let token = localStorage.getItem("jwt");
+            let decoded = VueJwtDecode.decode(token);
+            this.user = decoded;
+            this.username = this.user.name;
+            this.isLogin = "Logout";
+          } else {
+            this.username = '';
+            this.isLogin = "Login";
+          }
+
         }
     },
     created() {
-        let token = localStorage.getItem("jwt");
-        let decoded = VueJwtDecode.decode(token);
-        this.user = decoded;
+          this.checklogin();
     },
+
 };
 </script>
 

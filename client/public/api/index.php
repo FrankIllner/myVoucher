@@ -22,7 +22,7 @@ if(isset($_FILES['files']['name'])){
           $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
           // Valid extensions
-          $valid_ext = array("png","jpeg","jpg","pdf");
+          $valid_ext = array("png","jpeg","jpg","pdf","txt","doc","docx");
 
           // Check extension
           if(in_array($ext, $valid_ext)){
@@ -32,7 +32,9 @@ if(isset($_FILES['files']['name'])){
              $monat = date("n");
              $jahr = date("Y");
              $stunde = date("G");
-             $currentDate = $tag+$monat+$jahr+$stunde;
+             $minuten = date("i");
+             $currentDate = $tag+$monat+$jahr+$stunde+$minuten;
+
 
              $newfilename = $currentDate."-".$filename;
              $path = $upload_location.$newfilename;
@@ -42,11 +44,8 @@ if(isset($_FILES['files']['name'])){
                 $files_arr[] = $newfilename;
              }
           }
-
       }
-
    }
-
 }
 
 echo json_encode($files_arr);

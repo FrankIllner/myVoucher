@@ -47,13 +47,15 @@
 </template>
 
 <script>
-import swal from "sweetalert";
+//import swal from "sweetalert";
 export default {
+  name: 'Login',
   data() {
     return {
       login: {
         email: "",
-        password: ""
+        password: "",
+
       }
     };
   },
@@ -62,30 +64,36 @@ export default {
       try {
         let response = await this.$http.post("/user/login", this.login);
         let token = response.data.token;
-        let userType = response.data.user.usertype;
         
-  
+        let userType = response.data.user.usertype;
+        let additonalId = response.data.user.additionalId;
+        let u_id = response.data.user._id;
         localStorage.setItem("jwt", token);
+       
 
         if (token) {
-          swal("Success", "Login Successful", "Error");
-
+          
           let hasAdditional = await this.$http.post("/user/checkAdditional", {}, {headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json',
               }},
           );
           let bool_hasAdditional = hasAdditional.data.hasAdditional;
-          console.log(bool_hasAdditional);
+         
           if (userType == 'registerBusiness' && !bool_hasAdditional) {
              this.$router.push("/register-additional");
           } else {
-             this.$router.push("/my-wallet/");
+            if (userType == 'registerBusiness') {
+              this.$router.push("/company/" + additonalId + "/userid/" + u_id);
+            } else {
+                this.$router.push("/my-wallet/");
+            }
+           
           }
-         
+          location.reload();
         }
       } catch (err) {
-        swal("Error", "Something Went Wrong", "error");
+       
         console.log(err.response);
       }
     }

@@ -12,7 +12,7 @@ exports.registerBusinessAdditional = async (req, res) => {
         message: "Es exestiert schon ein Gewerbe mit der ID - already in use"
       });
     }
-   
+  
     const userbusiness = new UserBusiness({
       company: req.body.company,
       street: req.body.street,
@@ -23,10 +23,11 @@ exports.registerBusinessAdditional = async (req, res) => {
       opening: req.body.opening,
       businessNo: req.body.businessNo,
       aboutus: req.body.aboutus,
-      file1: req.body.file1
+      file1: req.body.file1,
+      userId: req.userData._id
     });
     let data = await userbusiness.save();
-   
+    
     let additionalId = userbusiness._id;
     console.log(additionalId);
     let id = req.body.userId;
@@ -64,11 +65,10 @@ exports.getCompany = async (req, res) => {
 // pruefen ob Zusatzinfos schon exestieren
 exports.hasAdditinalInfos = async (req, res) => {
   let userId = req.userData._id;
+  console.log(req);
   try {
     let o_additional = await User.findAdditonalId(userId);
     let additionalId = o_additional[0].additionalId;
-    console.log('------------additionalId---------------');
-    console.log(additionalId);
     let hasAdditional = await UserBusiness.findAdditonalInfo(additionalId);
    
     res.status(201).json({ hasAdditional });

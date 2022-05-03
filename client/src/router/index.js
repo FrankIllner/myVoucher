@@ -19,7 +19,7 @@ const routes = [
     }
   },
   {
-    path: "/company/:id",
+    path: "/company/:aid/userid/:uid",
     name: "MyCompnay",
     component: MyCompany
   },
