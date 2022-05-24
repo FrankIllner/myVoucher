@@ -2,8 +2,8 @@
     <div class="container-main">
       <div class="container company">
 
-        <div class="aboutus" v-for="company in companyData" :key="company._id">
-         
+        <div class="aboutus" v-for="company in companyData" :key="company._id" >
+
           <h1 class="mt-5">Mein Unternhemen: {{company.company}}</h1>
           <div class="mt-3">{{company.aboutus}}</div>
           
@@ -34,12 +34,15 @@
         <div class="mt-3">
           <h2>Wir bieten diese Gutscheine an</h2>
 
-          <div class="myVoucher card" v-for="voucher in voucherData" :key="voucher._id">
-          
+          <div class="myVoucher card" v-for="voucher in voucherData" :key="voucher._id" v-bind:id="voucher._id">
             <div>
-            <span>Gutschein: {{voucher.name}}</span>
-            <span>Wert: {{voucher.price}}</span>
-            <span>güktig bis: {{voucher.expiryDate}}</span>
+              <span>Gutschein: {{voucher.name}}</span>
+              <span>Wert: {{voucher.price}}</span>
+              <span>güktig bis: {{voucher.expiryDate}}</span>
+              {{sameUser}}
+              <div v-if="sameUser"><span>editieren</span><span>löschen</span></div>
+              <div v-else><router-link to="/basket">weiter mit diesem Gutschein</router-link></div>
+
             </div>
           </div>
           <p> <router-link to="/add-business-voucher">Fügen Sie einen Gutschein hinzu!</router-link></p>
@@ -62,7 +65,9 @@ export default {
       param: "",
       companyData: [],
       voucherData: [],
-      userId: "",
+      userid: '',
+      sameUser: '',
+      selectedUserid: "",
        settings: {
         arrows: true,
         dots: true,
@@ -84,14 +89,13 @@ export default {
         'Content-Type': 'application/json',
         }},
       );
-    
+      console.log(responseCompany);
       if (responseCompany) {
         this.companyData = responseCompany.data.dataCompany;
       }
     
     },
     async getAllMyVouchers() {
-       console.log( this.$isLogin);
       let token = localStorage.getItem("jwt");
       
       if (token) {
@@ -112,13 +116,28 @@ export default {
       if (responseVoucher) {
         this.voucherData = responseVoucher.data.dataVouchers;
       }
+    },
+    checkCurrentUer() {
+      this.param = this.$route.params;
+      let selectedUserid =  this.param.uid;
+      let token = localStorage.getItem("jwt");
+      this.sameUser = false;
+      if (token) {
+        let decoded = VueJwtDecode.decode(token);
+        this.user = decoded;
+        this.userid = this.user._id;
+      }
+      if (selectedUserid === this.userid) {
+        this.sameUser = true;
+      }
 
     }
   },
 
-  async mounted() {
+  async created() {
     this.getCompany();
     this.getAllMyVouchers();
+    this.checkCurrentUer();
   }
 }
 </script>

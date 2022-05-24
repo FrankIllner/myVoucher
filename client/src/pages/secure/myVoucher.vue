@@ -130,11 +130,12 @@ export default {
   async created() {
     this.getUserVoucherDetails();
     this.getAllBusiness();
+     this.$root.$refs.AllVouchers = this;
   }
 };
 </script>
 
-<style>
+<style lang="scss">
   .voucher-overview .group img {
     width: 100%;
     height: auto;
@@ -142,12 +143,17 @@ export default {
   .voucher-overview .slick-prev:before, .voucher-overview .slick-next:before {
     color: blueviolet !important;
   }
-  .voucher-overview .cards .item {
-    border: 1px solid #CCC;
-    border-radius: 10px;
-    box-shadow: 2px 2px 6px 3px;
-    margin: 5px;
-    padding: 10px;
+  .voucher-overview .cards {
+      a {
+        text-decoration: none;
+      }
+     .item {
+      border: 1px solid #CCC;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px 3px;
+      margin: 5px;
+      padding: 10px;
+    }
   }
 </style>
 

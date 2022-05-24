@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
+import VueJwtDecode from "vue-jwt-decode";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 import "bootstrap/dist/css/bootstrap.css"
@@ -19,10 +20,14 @@ const base = axios.create({
 
 Vue.prototype.$http = base;
 Vue.config.productionTip = false;
-
+Vue.prototype.$userType = '';
 let token = localStorage.getItem("jwt");
+
+
 if (token) {
   Vue.prototype.$isLogin = true;
+  let decoded = VueJwtDecode.decode(token);
+  Vue.prototype.$userType = decoded.usertype;
 } 
 
 new Vue({
