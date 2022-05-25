@@ -1,39 +1,40 @@
 <template>
     <div class="fullscreen-image">
         <div class="container">
-        <div class="row">
-        <div class="block col-12 col-md-6 mt-5">
-            <h3>Hallo, hier steht eine Erklärung - wer wir sind und was wir machen! </h3>
-            <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna 
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea 
-                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, </span>
-        
-        </div>
-        
-        <div class="block col-12 col-md-6 mt-5">
-        <h3>Hier kurze Erklärung zum Partner Status - bieten Sie Gutscheine hier an und profitieren Sie!!</h3>
-        <span>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna 
-            aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea 
-            takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-        </span>
-        </div>
-        <div class="col-12">
-            <div v-if="isLogin">  
-                <Login />
+            <div class="row">
+                <div class="block col-12 col-md-6 mt-5">
+                    <h3>Hallo, hier steht eine Erklärung - wer wir sind und was wir machen! </h3>
+                    <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna 
+                        aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea 
+                        takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, </span>
+                
+                </div>
+                
+                <div class="block col-12 col-md-6 mt-5">
+                    <h3>Hier kurze Erklärung zum Partner Status - bieten Sie Gutscheine hier an und profitieren Sie!!</h3>
+                    <span>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna 
+                    </span>
+                </div>
+                <div class="col-12 mt-5">
+                    <div class="button center" v-if="this.$userType !== 'registerBusiness'">
+                        <router-link to="/register-business">Partner werden</router-link>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div v-if="isLogin">  
+                        <Login />
+                    </div>
+                </div>
             </div>
-        </div>
-        </div>
-        <div class="button center">
-           <router-link to="/register-business">Partner werden</router-link>
-        </div>
+        
         </div>
     </div>
 </template>
 
 
 <script>
-import Login from "@/components/auth/login";
+import Login from "@/components/auth/Login";
 export default {
     components: {
         Login
@@ -48,12 +49,7 @@ export default {
 
 <style lang="scss">
     .fullscreen-image {
-        background-image: url("../assets/img/fullscreen6.jpg");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        width: 100vw;
-        margin-left: -37.3%;
+   
 
         .block {
             background-color: azure;

@@ -15,6 +15,7 @@
         display: flex;
         margin-top: 5rem;
         background-color: blueviolet;
+
     }
     footer ul  {
         li {

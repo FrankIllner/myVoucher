@@ -1,10 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import MyVoucher from "../pages/secure/myVoucher.vue";
+import MyWallet from "../pages/secure/MyWallet.vue";
 import About from "../pages/About.vue";
 import Start from "../pages/Start.vue";
-import MyCompany from "../pages/myCompany.vue";
-import AdditinalUsers from "../pages/additional.vue";
+import MyCompany from "../pages/MyCompany.vue";
+import AdditinalUsers from "../pages/Additional.vue";
 
 
 Vue.use(VueRouter);
@@ -12,8 +12,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/my-wallet",
-    name: "MyVoucher",
-    component: MyVoucher,
+    name: "MyWallet",
+    component: MyWallet,
     meta: {
       requiresAuth: true
     }
@@ -44,13 +44,13 @@ const routes = [
   {
     path: "/register-business",
     name: "registerBusiness",
-    component: () => import("../pages/register.vue"),
+    component: () => import("../components/auth/Register.vue"),
     props: {user: 'business'}
   },
   {
     path: "/register",
     name: "registerCustomer",
-    component: () => import("../pages/register.vue"),
+    component: () => import("../components/auth/Register.vue"),
     props: {user: 'user'}
   },
   {

@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <div class="row">
-      <h3 class="center-text">Um Partner bei uns zu werden, benötigen wir noch folgende Daten: </h3>
+      <h3 class="text-center mt-5">Um Partner bei uns zu werden, benötigen wir noch folgende Daten: </h3>
       <div class="col-lg-8 offset-lg-2 col-sm-10 offset-sm-1">
         <form
           class="text-center border border-primary p-5"
@@ -95,14 +94,13 @@
 
         </form>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
 import swal from "sweetalert";
 import VueJwtDecode from "vue-jwt-decode";
-import MultipleUpload from '../forms/multipleUpload.vue';
+import MultipleUpload from '../forms/MultipleUpload.vue';
 export default {
   components: { MultipleUpload },
   data() {
@@ -157,12 +155,11 @@ export default {
           }},
         );
         
-       
         if (response) {
-          this.$router.push("/my-wallet");
-          swal("Success", "Zusatzinfos wurden gepseichert", "success");
+          let companyId = response.data.data._id;
           // Lade Bilder in den public Ordner
           this.$root.$refs.MultipleUploads.sendFile();
+          this.$router.push("/company/" + companyId + "/userid/" + userId);
         } else {
           swal("Error", "Zusatzinfos Fehler beim speichern", "Error");
         }

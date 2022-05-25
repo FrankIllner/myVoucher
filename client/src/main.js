@@ -27,6 +27,8 @@ let token = localStorage.getItem("jwt");
 if (token) {
   Vue.prototype.$isLogin = true;
   let decoded = VueJwtDecode.decode(token);
+  Vue.prototype.$companyId = decoded.additionalId;
+  Vue.prototype.$userId = decoded._id;
   Vue.prototype.$userType = decoded.usertype;
 } 
 

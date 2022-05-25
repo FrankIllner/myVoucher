@@ -41,11 +41,11 @@
               <span>güktig bis: {{voucher.expiryDate}}</span>
               {{sameUser}}
               <div v-if="sameUser"><span>editieren</span><span>löschen</span></div>
-              <div v-else><router-link to="/basket">weiter mit diesem Gutschein</router-link></div>
+              <div v-else><router-link to="/basket">in den Warenkorb</router-link></div>
 
             </div>
           </div>
-          <p> <router-link to="/add-business-voucher">Fügen Sie einen Gutschein hinzu!</router-link></p>
+          <p v-if="sameUser"> <router-link to="/add-business-voucher">Fügen Sie einen Gutschein hinzu!</router-link></p>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
         'Content-Type': 'application/json',
         }},
       );
-      console.log(responseCompany);
+    
       if (responseCompany) {
         this.companyData = responseCompany.data.dataCompany;
       }

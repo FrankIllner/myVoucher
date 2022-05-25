@@ -124,13 +124,29 @@ export default {
         console.log(err);
       }
 
+    },
+    checkUserType() {
+      const userId = this.$userId;
+      let companyId = this.$companyId;
+      this.param = this.$route.params;
+      let companyid =  this.param.aid;
+      if (companyId == '') {
+        companyId = companyid;
+      }
+
+      if (this.$userType === 'registerBusiness') {
+        this.$router.push("/company/" + companyId + "/userid/" + userId);
+      }
     }
   },
 
   async created() {
+
+    this.checkUserType();
     this.getUserVoucherDetails();
     this.getAllBusiness();
-     this.$root.$refs.AllVouchers = this;
+    this.$root.$refs.AllVouchers = this;
+    
   }
 };
 </script>

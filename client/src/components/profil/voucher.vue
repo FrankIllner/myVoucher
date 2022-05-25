@@ -59,7 +59,7 @@
 import swal from "sweetalert";
 import VueJwtDecode from "vue-jwt-decode";
 //import Upload from '../forms/upload.vue';
-import MultipleUpload from '../forms/multipleUpload.vue';
+import MultipleUpload from '../forms/MultipleUpload.vue';
 export default {
   components: { MultipleUpload },
   data() {
@@ -118,9 +118,11 @@ export default {
         //let token = response.data.token;
         // Todo pruefen ob response ok ist
         if (response) {
-          swal("Success", "Voucher - Registration Was successful", "success");
+          
           // Single MultipleUpload
           this.$root.$refs.MultipleUploads.sendFile();
+          this.$router.push("/my-wallet/");
+          
         } else {
           swal("Error", "Gutschein - Error2", "Error");
         }
@@ -129,8 +131,6 @@ export default {
         console.log(err.response);
       }
     },
-
-
   },
    created() {
         let token = localStorage.getItem("jwt");

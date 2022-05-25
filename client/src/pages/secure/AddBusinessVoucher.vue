@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import addBusinessVoucher from "@/components/profil/voucherBusiness";
+import addBusinessVoucher from "@/components/profil/VoucherBusiness";
 
 export default {
   components: {

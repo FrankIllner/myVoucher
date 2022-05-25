@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import Company from "@/components/company";
+import Company from "@/components/Company";
 export default {
   components: {
     Company

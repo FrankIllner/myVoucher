@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Nav from "@/components/layout/inc/nav";
+import Nav from "@/components/layout/inc/Nav";
 
 export default {
   components: {

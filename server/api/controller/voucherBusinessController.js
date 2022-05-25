@@ -22,9 +22,10 @@ exports.addBusinessVoucher = async (req, res) => {
 // Voucher auselen
 exports.getVoucher = async (req, res) => {
   let current_id =  req.body.userid;
+
   try {
     let dataVouchers = await VoucherBusiness.findVouchers(current_id);
-    console.log(dataVouchers);
+
     res.status(201).json({ dataVouchers });
   } catch (err) {
     res.status(400).json({ err: err });

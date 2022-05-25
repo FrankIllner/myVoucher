@@ -7,7 +7,7 @@
 
 </template>
 <script>
-import Start from "@/components/start";
+import Start from "@/components/Start";
 export default {
   components: {
     Start

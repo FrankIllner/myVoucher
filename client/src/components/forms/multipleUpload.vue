@@ -103,10 +103,9 @@ export default {
             .then(function (response) {
                 console.log(response);
                 if (!response.data) {
-                    alert('Sorry File not uploaded.');
+                    console.log('Sorry File not uploaded.');
                 } else {
-        
-                    alert('Your Vuejs with PHP File uploaded successfully.');
+                    console.log('Your Vuejs with PHP File uploaded successfully.');
                 }
 
             })
@@ -117,7 +116,7 @@ export default {
         },
         validateFiles() {
         _.forEach(this.uploadFiles, file => {
-                console.log(file.name);
+            
                 if (this.validate(file) === "") {
                     this.valdiateUploadFiles.push(file.name);
                 }

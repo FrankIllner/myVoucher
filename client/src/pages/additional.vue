@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import registerAdditonal from "@/components/auth/additional";
+import registerAdditonal from "@/components/auth/Additional";
 
 
 export default {

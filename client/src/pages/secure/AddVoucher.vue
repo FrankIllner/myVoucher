@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import addvoucher from "@/components/profil/voucher";
+import addvoucher from "@/components/profil/Voucher";
 
 export default {
   components: {
