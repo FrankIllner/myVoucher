@@ -47,7 +47,7 @@
 </template>
 
 <script>
-//import swal from "sweetalert";
+import swal from "sweetalert";
 export default {
   name: 'Login',
   data() {
@@ -70,9 +70,7 @@ export default {
         let u_id = response.data.user._id;
         localStorage.setItem("jwt", token);
        
-
         if (token) {
-          
           let hasAdditional = await this.$http.post("/user/checkAdditional", {}, {headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json',
@@ -90,11 +88,9 @@ export default {
             }
            
           }
-          location.reload();
         }
       } catch (err) {
-       
-        console.log(err.response);
+        swal("Error", "Login - Fehler - prüfen Sie Ihre Eingabe", "error");
       }
     }
   }

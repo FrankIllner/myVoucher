@@ -26,6 +26,28 @@
                         <Login />
                     </div>
                 </div>
+
+                <div class="voucher-overview mt-4">
+                   
+                    <h2 v-if="!isLogin">Akktuelle Gutscheine in deinem Umkreis</h2>
+                    <div class="group cards row">
+                        
+                        <div v-for="business in allBusiness" :key="business._id" class="col-xs-12 col-sm-6 col-md-4 p-2">
+                        <router-link :to="'/company/' + business._id + '/userid/' + business.userId">
+                            <div class="item">
+                            <p><b>{{business.company}}</b></p>
+                            <span>{{business.street}} {{business.streetNo}}</span><br />
+                            <span>{{business.postcode}} {{business.city}}</span><br />
+                            <span>{{business.phone}}</span><br />
+                            <span>{{business.businessNo}}</span><br />
+                            <span>{{business.userId}}</span><br />
+                            </div>
+                        </router-link>
+                        </div>
+                    
+                    </div>
+                </div>
+
             </div>
         
         </div>
@@ -35,22 +57,46 @@
 
 <script>
 import Login from "@/components/auth/Login";
+import VueJwtDecode from "vue-jwt-decode";
 export default {
     components: {
         Login
     },
     data() {
         return { 
-            isLogin: !this.$isLogin
+            isLogin: !this.$isLogin,
+            allBusiness: [],
         }
+    },
+    methods: {
+        async getAllBusiness() {
+            let token = localStorage.getItem("jwt");
+            let decoded = VueJwtDecode.decode(token);
+            this.user = decoded;
+
+            try {
+                let response = await this.$http.post("/user/getAllBusiness", {}, {headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                    }},
+                );
+            
+                if (response) {
+                this.allBusiness = response.data.data;
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    },
+    async created() {
+        this.getAllBusiness();
     }
 };
 </script>
 
 <style lang="scss">
     .fullscreen-image {
-   
-
         .block {
             background-color: azure;
             padding: 10px;
@@ -80,4 +126,5 @@ export default {
         text-decoration: none;
         font-size: 20px;
     }
+
 </style>

@@ -7,6 +7,7 @@ const voucherBusinessController = require("../controller/voucherBusinessControll
 router.post("/addUsersVoucher",auth, voucherController.addvoucher);
 router.post("/addBusinessVoucher",auth, voucherBusinessController.addBusinessVoucher);
 router.post("/getAllVouchers",auth, voucherController.getAllVouchers);
+router.post("/toBasket",auth, voucherBusinessController.addItemToBasket);
 router.post("/findVouchers", voucherBusinessController.getVoucher);
 
 

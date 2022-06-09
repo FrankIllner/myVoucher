@@ -1,4 +1,5 @@
 const VoucherBusiness = require("../model/VoucherBusiness");
+const Basket = require("../model/Basket");
 
 // Business Gutschein - hier erstellen Geschäts Leute ihren Gutschein
 // Todo QR Coder generieren
@@ -31,3 +32,17 @@ exports.getVoucher = async (req, res) => {
     res.status(400).json({ err: err });
   }
 };
+
+// Gutschein in den Warnekorb
+exports.addItemToBasket = async (req, res) => {
+  let voucher_id = req.body.voucher_id;
+
+  try {
+    let dataBasket = await Basket.getVoucher(voucher_id);
+    res.status(201).json({ dataBasket });
+  } catch (err) {
+    console.log('Basket - false')
+    res.status(400).json({ err: err });
+  }
+ 
+}

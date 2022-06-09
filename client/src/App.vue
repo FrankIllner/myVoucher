@@ -19,3 +19,21 @@ export default {
 };
 </script>
 
+
+<style lang="scss">
+  .bg-vue {
+    background-color: rgb(52, 73, 94);
+    color: white;
+  }
+  .bg-vue2 {
+    background-color: rgb(65, 184, 131) !important;
+    color: white;
+  }
+  .color-vue {
+    color: rgb(52, 73, 94);
+  }
+  .color-vue2 {
+    color: rgb(65, 184, 131);
+  }
+</style>
+

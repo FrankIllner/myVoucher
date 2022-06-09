@@ -32,17 +32,27 @@
           </div>
         </div>
         <div class="mt-3">
-          <h2>Wir bieten diese Gutscheine an</h2>
+          <h2 v-if="voucherData.length > 0">Wir bieten diese Gutscheine an</h2>
 
-          <div class="myVoucher card" v-for="voucher in voucherData" :key="voucher._id" v-bind:id="voucher._id">
-            <div>
-              <span>Gutschein: {{voucher.name}}</span>
-              <span>Wert: {{voucher.price}}</span>
+          <div class="myVoucher card col-md-3 col-sm-4 col-xs-12" v-for="voucher in voucherData" :key="voucher._id" v-bind:id="voucher._id">
+            <div class="item">
+              <h6>Gutschein: {{voucher.name}}</h6>
+              <span>Wert: {{voucher.price}}</span><br />
               <span>güktig bis: {{voucher.expiryDate}}</span>
-              {{sameUser}}
-              <div v-if="sameUser"><span>editieren</span><span>löschen</span></div>
-              <div v-else><router-link to="/basket">in den Warenkorb</router-link></div>
-
+              
+              <div class="postion-bottom">
+                <div v-if="sameUser">
+                  <span class="mt-4 mb-2"> <img :src="`/qr/images/${voucher._id}.png`" /></span>
+                  <span> <a href="#" class="mr-3" @click="edit(voucher._id)">editieren</a></span>
+                  <span><a href="#" class="mr-4" @click="del(voucher._id)">löschen</a></span>
+                  <span><a href="#">drucken</a></span>
+                  <a href="#" v-text="`http://192.168.178.26:8080/toBasket/${voucher._id}`" v-bind="`http://192.168.178.26:8080/toBasket/${voucher._id}`"> foo</a>
+                </div>
+                <div v-else>
+                  <a href="#" class="mr-5" @click="addVoucher(voucher._id)">in den Warenkorb</a>
+                  <router-link to="#">Details</router-link>
+                </div>
+              </div>
             </div>
           </div>
           <p v-if="sameUser"> <router-link to="/add-business-voucher">Fügen Sie einen Gutschein hinzu!</router-link></p>
@@ -67,7 +77,9 @@ export default {
       voucherData: [],
       userid: '',
       sameUser: '',
+      basketItemObj: '',
       selectedUserid: "",
+      count: "1",
        settings: {
         arrows: true,
         dots: true,
@@ -131,6 +143,25 @@ export default {
         this.sameUser = true;
       }
 
+    },
+    async addVoucher(voucher_id) {
+      let token = localStorage.getItem("jwt");
+      let toBasket = await this.$http.post("/voucher/toBasket", {voucher_id}, {headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        }},
+      );
+      
+      if (toBasket) {
+        let basketItemObj = toBasket.data.dataBasket[0];
+        basketItemObj.count = this.count;
+        // Parse the serialized data back into an aray of objects
+        var addVoucher = JSON.parse(localStorage.getItem('myBasketItems')) || [];
+        addVoucher.push(basketItemObj);
+          // Re-serialize the array back into a string and store it in localStorage
+        localStorage.setItem('myBasketItems', JSON.stringify(addVoucher));
+        this.$router.push('/basket/')
+      }
     }
   },
 
@@ -138,10 +169,33 @@ export default {
     this.getCompany();
     this.getAllMyVouchers();
     this.checkCurrentUer();
+    this.param = this.$route.params;
+    let voucherId =  this.param.vid;
+    console.log(voucherId)
+    if (voucherId) {
+      this.addVoucher(voucherId);
+    }
   }
 }
 </script>
 
-<style scoped>
-  
+<style lang="scss" scoped >
+      .card {
+        display: inline-grid;
+        border: none;
+        min-height: 250px;
+        a {
+            text-decoration: none;
+        }
+        .item {
+            border-radius: 10px;
+            box-shadow: 2px 2px 6px 3px;
+            margin: 5px;
+            padding: 10px 5px;
+            .postion-bottom {
+              position: absolute;
+              bottom: 20px;
+            }
+        }
+      }
 </style>

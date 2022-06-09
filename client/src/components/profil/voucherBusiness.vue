@@ -45,6 +45,7 @@
 
 <script>
 import swal from "sweetalert";
+import axios from "axios";
 import VueJwtDecode from "vue-jwt-decode";
 
 export default {
@@ -53,10 +54,12 @@ export default {
       voucher: {
         selectedCategory: null,
          options: [
-          { value: null, text: 'Wählen Sie ein Gutschein Layout' },
-          { value: '1', text: 'Dark' },
-          { value: '2', text: 'Light' },
-          { value: '3', text: 'normal' },
+      { value: null, text: 'Um welchen Gutschein Kategorie handelt es sich' },
+          { value: '1', text: 'Massage' },
+          { value: '2', text: 'Bücher' },
+          { value: '3', text: 'Kultur' },
+          { value: '4', text: 'Basteln' },
+          { value: '5', text: 'Sport' },
         ],
         expiryDate: '',
         name: "",
@@ -80,7 +83,30 @@ export default {
      
         //let token = response.data.token;
         if (response) {
-          swal("Success", "Voucher - wurde anglegt", "success");
+         
+          let voucherBusinessId = response.data.data._id;
+          const formData = new FormData();
+          formData.append('voucherId', voucherBusinessId);
+          formData.append('url', window.location.host);
+  
+          axios.post('/qr', formData,
+          {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+          .then(function (response) {
+              console.log(response);
+              if (!response.data) {
+                  console.log('Problem by generate QR-Code');
+              } else {
+                  console.log('QR-Code was Generate');
+              }
+
+          })
+
+          this.$router.push("/company/" + voucherBusinessId + "/userid/" + userId);
+            
         } else {
           swal("Error", "Gutschein - Error2", "Error");
         }

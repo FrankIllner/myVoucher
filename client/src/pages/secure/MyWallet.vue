@@ -8,7 +8,7 @@
               <h2>Gutschein kaufen</h2>
            
               <div class="group cards row">
-                <div v-for="business in allBusiness" :key="business._id" class="col-xs-12 col-sm-6 col-md-4">
+                <div v-for="business in allBusiness" :key="business._id" class="col-xs-12 col-sm-6 col-md-4 p-2">
                   <router-link :to="'/company/' + business._id + '/userid/' + business.userId">
                     <div class="item">
                       <p><b>{{business.company}}</b></p>
@@ -28,7 +28,7 @@
               <h2>Meine Gutscheine</h2>
               <div class="group cards row">
                
-                <div v-for="voucher in allVouchers" :key="voucher._id" class="col-xs-12 col-sm-6 col-md-4">
+                <div v-for="voucher in allVouchers" :key="voucher._id" class="col-xs-12 col-sm-6 col-md-4 p-2">
                   <div class="item">
                     <p><b>{{voucher.name}}</b></p>
                     <span><label>Gutschein-Wert: </label> {{voucher.price}}€</span><br />
@@ -169,6 +169,7 @@ export default {
       box-shadow: 2px 2px 6px 3px;
       margin: 5px;
       padding: 10px;
+      height: 100%;
     }
   }
 </style>

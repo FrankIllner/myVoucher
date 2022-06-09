@@ -23,7 +23,6 @@ Vue.config.productionTip = false;
 Vue.prototype.$userType = '';
 let token = localStorage.getItem("jwt");
 
-
 if (token) {
   Vue.prototype.$isLogin = true;
   let decoded = VueJwtDecode.decode(token);

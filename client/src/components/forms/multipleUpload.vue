@@ -94,7 +94,7 @@ export default {
                 }
             });
             
-            axios.post('http://localhost:8080/api', formData,
+            axios.post('/api', formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'

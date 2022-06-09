@@ -4,7 +4,7 @@
             <b-navbar-brand class="logo" href="/"><img src="../../../assets/img/logo.png"></b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-          {{this.$isLogin}}
+          {{this.isLogin}}
           {{this.$userType}}
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav v-if="isLogin && userType !== 'registerBusiness'">
@@ -45,8 +45,9 @@ export default {
     data() {
         return { 
             isLoginLabel: '',
-            isLogin: this.$isLogin,
-            userType: ''
+            isLogin: '',
+            userType: '',
+            username: ''
         }
     },
     methods: {
@@ -56,25 +57,31 @@ export default {
             location.reload();
         },
         checklogin () {
-        
-          if (this.$isLogin) {
             let token = localStorage.getItem("jwt");
-            let decoded = VueJwtDecode.decode(token);
-            this.user = decoded;
-            console.log(this.user);
-            this.username = this.user.name;
-            this.userType = this.user.usertype;
-            this.isLoginLabel = "Logout";
-          } else {
-            this.username = '';
-            this.isLoginLabel = "Login";
-          }
+            console.log(token);
+            if (this.$isLogin || token) {
+                let decoded = VueJwtDecode.decode(token);
+                this.user = decoded;
+                this.isLogin = true;
+                this.username = this.user.name;
+                this.userType = this.user.usertype;
+                this.isLoginLabel = "Logout";
+            } else {
+                this.username = '';
+                this.isLoginLabel = "Login";
+                this.isLogin = false;
+            }
 
         }
     },
     created() {
           this.checklogin();
     },
+    watch: {
+        $route () {
+            this.checklogin();
+        }
+    }
 
 };
 </script>

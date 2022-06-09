@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const voucherBusinessSchema = mongoose.Schema({
+const voucherBusinessSchema = new mongoose.Schema({
   selectedCategory: {
     type: String,
   },

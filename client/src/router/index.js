@@ -5,7 +5,7 @@ import About from "../pages/About.vue";
 import Start from "../pages/Start.vue";
 import MyCompany from "../pages/MyCompany.vue";
 import AdditinalUsers from "../pages/Additional.vue";
-
+import Basket from "../pages/secure/Basket.vue";
 
 Vue.use(VueRouter);
 
@@ -19,10 +19,16 @@ const routes = [
     }
   },
   {
+    path: "/toBasket/:vid",
+    name: "MyCompanyToBasket",
+    component: () => import("../components/MyCompany.vue"),
+  },
+  {
     path: "/company/:aid/userid/:uid",
     name: "MyCompnay",
     component: MyCompany
   },
+
   {
     path: "/about",
     name: "about",
@@ -65,6 +71,14 @@ const routes = [
     path: "/add-business-voucher",
     name: "businessVoucher",
     component: () => import("../pages/secure/AddBusinessVoucher.vue"),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/basket",
+    name: "basket",
+    component: Basket,
     meta: {
       requiresAuth: true
     }

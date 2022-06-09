@@ -1,5 +1,4 @@
 const Voucher = require("../model/Voucher");
-
 // Gutschein für private User - speichern ihren eigenen Gutschein
 // TODO: File auslesen
 exports.addvoucher = async (req, res) => {
@@ -42,5 +41,6 @@ exports.getAllVouchers = async (req, res) => {
     res.status(400).json({ err: err });
   }
 };
+
 
 
