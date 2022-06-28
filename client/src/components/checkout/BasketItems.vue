@@ -60,12 +60,13 @@
         </table>
         <hr>
     </div>
-     <basketOverview :basketPriceList="price" :priceWithTax="taxPrice" />
+     <basketOverview :basketPriceList="price" :priceWithTax="taxPrice" :allSelectedVouchers="basketVoucherList"/>
     </div>
 </template>
 
 <script>
 import basketOverview from "@/components/checkout/BasketOverview.vue";
+
 export default {
     name: 'BasketItems',
     props: ['basketVoucherList', 'price', 'taxPrice'],

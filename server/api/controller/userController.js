@@ -53,3 +53,15 @@ exports.getUserDetails = async (req, res) => {
 };
 
 
+// gibt die aktuelle AdditionalId zurück
+exports.getAdditionalById = async (req, res) => {
+  let userId = req.userData._id;
+  try {
+    let o_additional = await User.findAdditonalId(userId);
+    res.status(201).json({ o_additional });
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
+};
+
+

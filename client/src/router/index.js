@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import MyWallet from "../pages/secure/MyWallet.vue";
 import About from "../pages/About.vue";
 import Start from "../pages/Start.vue";
+import PartnerControl from "../pages/PartnerControl.vue";
+import Checkout from "../pages/Checkout.vue";
 import MyCompany from "../pages/MyCompany.vue";
 import AdditinalUsers from "../pages/Additional.vue";
 import Basket from "../pages/secure/Basket.vue";
@@ -28,11 +30,26 @@ const routes = [
     name: "MyCompnay",
     component: MyCompany
   },
-
+  {
+    path: "/checkQrCode/buyId/:buy_id/customerId/:c_id/voucherId/:v_id/status/:status",
+    name: "CheckQrCode",
+    component: () => import("../components/profil/Control.vue"),
+  },
+  
   {
     path: "/about",
     name: "about",
     component: About
+  },
+  {
+    path: "/verwaltung",
+    name: "verwaltung",
+    component: PartnerControl
+  },
+  {
+    path: "/checkout",
+    name: "checkout",
+    component: Checkout
   },
   {
     path: "/",

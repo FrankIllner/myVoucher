@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="login-container">
+        {{error}}
         <b-form
           class="text-center border p-2 mb-4"
           style="margin-top:70px;height:auto;padding-top:30px !important;"
@@ -48,6 +49,7 @@
 
 <script>
 import swal from "sweetalert";
+import axios from "axios";
 export default {
   name: 'Login',
   data() {
@@ -56,22 +58,25 @@ export default {
         email: "",
         password: "",
 
-      }
+      },
+      error: ''
     };
   },
   methods: {
     async loginUser() {
       try {
-        let response = await this.$http.post("/user/login", this.login);
+        let response = await axios.post("/auth", this.login);
+        //let response = await this.$http.post("/user/login", this.login);
+
         let token = response.data.token;
-        
         let userType = response.data.user.usertype;
         let additonalId = response.data.user.additionalId;
         let u_id = response.data.user._id;
         localStorage.setItem("jwt", token);
        
         if (token) {
-          let hasAdditional = await this.$http.post("/user/checkAdditional", {}, {headers: {
+      
+          let hasAdditional = await axios.post("/additional", {}, {headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json',
               }},
@@ -90,6 +95,8 @@ export default {
           }
         }
       } catch (err) {
+        alert (err);
+        this.error = err;
         swal("Error", "Login - Fehler - prüfen Sie Ihre Eingabe", "error");
       }
     }

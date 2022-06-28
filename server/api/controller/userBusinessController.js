@@ -65,7 +65,6 @@ exports.getCompany = async (req, res) => {
 // pruefen ob Zusatzinfos schon exestieren
 exports.hasAdditinalInfos = async (req, res) => {
   let userId = req.userData._id;
-  console.log(req);
   try {
     let o_additional = await User.findAdditonalId(userId);
     let additionalId = o_additional[0].additionalId;

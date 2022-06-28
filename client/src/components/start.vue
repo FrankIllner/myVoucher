@@ -27,11 +27,9 @@
                     </div>
                 </div>
 
-                <div class="voucher-overview mt-4">
-                   
+                <div class="voucher-overview mt-4" v-if="this.$userType !== 'registerBusiness'">
                     <h2 v-if="!isLogin">Akktuelle Gutscheine in deinem Umkreis</h2>
                     <div class="group cards row">
-                        
                         <div v-for="business in allBusiness" :key="business._id" class="col-xs-12 col-sm-6 col-md-4 p-2">
                         <router-link :to="'/company/' + business._id + '/userid/' + business.userId">
                             <div class="item">
@@ -44,12 +42,9 @@
                             </div>
                         </router-link>
                         </div>
-                    
                     </div>
                 </div>
-
             </div>
-        
         </div>
     </div>
 </template>
@@ -58,6 +53,8 @@
 <script>
 import Login from "@/components/auth/Login";
 import VueJwtDecode from "vue-jwt-decode";
+
+
 export default {
     components: {
         Login
@@ -87,7 +84,9 @@ export default {
             } catch (err) {
                 console.log(err);
             }
-        }
+        },
+
+
     },
     async created() {
         this.getAllBusiness();

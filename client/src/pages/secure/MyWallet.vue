@@ -25,6 +25,22 @@
             </div>
 
             <div class="mt-5">
+              <h2>Meine gekauften Gutscheine</h2>
+              <div class="group cards row">
+               
+                <div v-for="boughtVouchers in allBoughtVouchers" :key="boughtVouchers._id" class="col-xs-12 col-sm-6 col-md-4 p-2">
+                  <div class="item">
+                    <p><b>{{boughtVouchers.name}}</b></p>
+                    <span><label>Gutschein-Wert: </label> {{boughtVouchers.price}}€</span><br />
+                    <span><label>Bekommen von: </label>{{boughtVouchers.fromPerson}}</span><br />
+                    <span><label>Gutschein läuft am </label> {{boughtVouchers.expiryDate}} ab</span>
+                    <span> <img :src="`/qr/images/${userId}-${boughtVouchers._id}.png`" /></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5">
               <h2>Meine Gutscheine</h2>
               <div class="group cards row">
                
@@ -76,6 +92,8 @@ export default {
       user: {},
       allVouchers: [],
       allBusiness: [],
+      allBoughtVouchers: [],
+      userId: this.$userId,
       settings: {
         arrows: true,
         dots: true,
@@ -91,7 +109,7 @@ export default {
       this.user = decoded;
   
       try {
-        let response = await this.$http.post("/voucher/getAllVouchers",  {}, {headers: {
+        let response = await  this.$http.post("/voucher/getAllVouchers",  {}, {headers: {
               'Authorization': 'Bearer ' + token,
               'Content-Type': 'application/json',
             }},
@@ -116,9 +134,30 @@ export default {
               'Content-Type': 'application/json',
             }},
         );
-       
+       console.log(response)
         if (response) {
           this.allBusiness = response.data.data;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+    },
+    async getAllBoughtVouchers () {
+      let token = localStorage.getItem("jwt");
+      let decoded = VueJwtDecode.decode(token);
+      this.user = decoded;
+      let userType = this.user.usertype;
+      let user_id =  this.user._id;
+      try {
+        let response = await this.$http.post("/voucher/getAllBoughtVouchers", {user_id, userType}, {headers: {
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/json',
+            }},
+        );
+
+        if (response) {
+         this.allBoughtVouchers = response.data.vouchers;
         }
       } catch (err) {
         console.log(err);
@@ -145,6 +184,7 @@ export default {
     this.checkUserType();
     this.getUserVoucherDetails();
     this.getAllBusiness();
+    this.getAllBoughtVouchers();
     this.$root.$refs.AllVouchers = this;
     
   }

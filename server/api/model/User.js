@@ -70,8 +70,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 userSchema.statics.findAdditonalId = async (id) => {
 
   const o_user = await User.find({_id: id});
-  console.log('o_user');
-  console.log(o_user);
+
   if (!o_user) {
     throw new Error({ error: "keine Unternhemen gefunden" });
   }

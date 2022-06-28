@@ -88,13 +88,24 @@ userBusinessSchema.statics.findOneCompany = async (id) => {
 userBusinessSchema.statics.findAdditonalInfo = async (id) => {
 
   const hasCompanyInfos = await UserBusiness.find({_id: id});
-  console.log('hasCompanyInfos');
-  console.log(hasCompanyInfos);
+
   if (hasCompanyInfos.length === 1) {
     return true;    
   }
   return false;
 };
+
+// pruefen ob Zusatzinfos hinterlegt sind 
+userBusinessSchema.statics.findAdditonalInfo = async (id) => {
+
+  const hasCompanyInfos = await UserBusiness.find({_id: id});
+
+  if (hasCompanyInfos.length === 1) {
+    return true;    
+  }
+  return false;
+};
+
 
 
 

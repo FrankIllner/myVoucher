@@ -41,7 +41,54 @@ exports.addItemToBasket = async (req, res) => {
     let dataBasket = await Basket.getVoucher(voucher_id);
     res.status(201).json({ dataBasket });
   } catch (err) {
-    console.log('Basket - false')
+    console.log('Basket in Warenkorb - false')
+    res.status(400).json({ err: err });
+  }
+ 
+}
+
+// kaufe Gutschein - alle wichtigen Paramter speichern
+// Gutschein in den Warnekorb
+exports.buyVoucher = async (req, res) => {
+  let user_id = req.body.user_id;
+  let partner_id = req.body.partner_id;
+  let offer_voucher_id = req.body.offer_voucher_id;
+  let status = req.body.status;
+
+  try {
+    
+    let dataBuyBasket = await Basket.buyVoucher(offer_voucher_id, partner_id, user_id, status);
+    res.status(201).json({ dataBuyBasket });
+  } catch (err) {
+    console.log('Basket kaufen - false')
+    res.status(400).json({ err: err });
+  }
+ 
+}
+
+// gibt mir die Id alle gekauften Gutscheine des Kunden aus - noch nicht eingelöst
+exports.getBoughtVouchersId = async (req, res) => {
+  let user_id = req.body.user_id;
+  let user_type = req.body.userType;
+  console.log('test');
+  try {
+    let vouchers = await Basket.getVoucherId(user_id, user_type);
+    res.status(201).json({ vouchers });
+  } catch (err) {
+    console.log('Gutscheine Verwaltung - false')
+    res.status(400).json({ err: err });
+  }
+ 
+}
+
+exports.getBoughtVouchersHistory = async (req, res) => {
+  let user_id = req.body.user_id;
+  try {
+    
+    let vouchersHistory = await Basket.getVoucherIdHistory(user_id);
+    res.status(201).json({ vouchersHistory });
+  } catch (err) {
+    console.log('Gutscheine Verwaltung History- false')
     res.status(400).json({ err: err });
   }
  

@@ -15,7 +15,7 @@ Vue.prototype.$isLogin = false;
 
 
 const base = axios.create({
-  baseURL: "http://localhost:4000"
+  baseURL: "http://192.168.178.26:4000"
 });
 
 Vue.prototype.$http = base;

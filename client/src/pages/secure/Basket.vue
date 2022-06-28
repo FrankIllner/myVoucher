@@ -13,8 +13,6 @@
 <script>
 import basketItems from "@/components/checkout/BasketItems.vue";
 
-
-
 export default {
   name: 'Basket',
   data() {

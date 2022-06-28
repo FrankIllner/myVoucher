@@ -1,10 +1,10 @@
 <template>
     <div class="container-main">
       <div class="container company">
-
+        <b>{{userid}}</b>
         <div class="aboutus" v-for="company in companyData" :key="company._id" >
 
-          <h1 class="mt-5">Mein Unternhemen: {{company.company}}</h1>
+          <h1 class="mt-5">Mein Unternhemen: {{company.company}} {{company._id}}</h1>
           <div class="mt-3">{{company.aboutus}}</div>
           
           <div class="row mt-5">
@@ -24,7 +24,7 @@
                 
                   <VueSlickCarousel v-bind="settings">
                     <div v-for="file in company.file1" :key="file">
-                        <img :src="`http://localhost:8080/api/uploads/${file}`" />
+                        <img :src="`/api/uploads/${file}`" />
                     </div>
                   </VueSlickCarousel>
               </div>
@@ -46,7 +46,7 @@
                   <span> <a href="#" class="mr-3" @click="edit(voucher._id)">editieren</a></span>
                   <span><a href="#" class="mr-4" @click="del(voucher._id)">löschen</a></span>
                   <span><a href="#">drucken</a></span>
-                  <a href="#" v-text="`http://192.168.178.26:8080/toBasket/${voucher._id}`" v-bind="`http://192.168.178.26:8080/toBasket/${voucher._id}`"> foo</a>
+               
                 </div>
                 <div v-else>
                   <a href="#" class="mr-5" @click="addVoucher(voucher._id)">in den Warenkorb</a>
@@ -96,7 +96,7 @@ export default {
       this.param = this.$route.params;
       let additionalId = {additionalId: this.param.aid};
 
-      let responseCompany = await this.$http.post("/user/findCompany", additionalId, {headers: {
+      let responseCompany = await this.$http.post("/user/getAdditionalId", additionalId, {headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json',
         }},
@@ -142,6 +142,7 @@ export default {
       if (selectedUserid === this.userid) {
         this.sameUser = true;
       }
+      
 
     },
     async addVoucher(voucher_id) {
@@ -153,6 +154,7 @@ export default {
       );
       
       if (toBasket) {
+       
         let basketItemObj = toBasket.data.dataBasket[0];
         basketItemObj.count = this.count;
         // Parse the serialized data back into an aray of objects
