@@ -1,4 +1,6 @@
 const express = require("express");
+var https = require('https');
+var fs = require('fs');
 const PORT = process.env.PORT || 4000;
 const morgan = require("morgan");
 const cors = require("cors");
@@ -7,6 +9,12 @@ const mongoose = require("mongoose");
 const config = require("./config/db");
 
 const app = express();
+
+// https
+var options = {
+  key: fs.readFileSync('./cert/localhost+4-key.pem'),
+  cert: fs.readFileSync('./cert/localhost+4.pem'),
+};
 
 //configure database and mongoose
 mongoose
@@ -17,8 +25,6 @@ mongoose
   .catch(err => {
     console.log({ database_error: err });
   });
-
-
 
 //registering cors
 app.use(cors());
@@ -42,7 +48,7 @@ app.use("/user", userRoutes);
 const voucherRoutes = require("./api/route/voucher.js");
 app.use("/voucher", voucherRoutes);
 
-
-app.listen(PORT, () => {
+var server = https.createServer(options, app);
+server.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
 });

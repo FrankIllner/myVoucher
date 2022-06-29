@@ -34,7 +34,7 @@
                     <span><label>Gutschein-Wert: </label> {{boughtVouchers.price}}€</span><br />
                     <span><label>Bekommen von: </label>{{boughtVouchers.fromPerson}}</span><br />
                     <span><label>Gutschein läuft am </label> {{boughtVouchers.expiryDate}} ab</span>
-                    <span> <img :src="`/qr/images/${userId}-${boughtVouchers._id}.png`" /></span>
+                    <span> <img :src="`/qr/images/${user_id}-${boughtVouchers._id}.png`" /></span>
                   </div>
                 </div>
               </div>
@@ -52,7 +52,7 @@
                     <span><label>Gutschein läuft am </label> {{voucher.expiryDate}} ab</span>
                     <VueSlickCarousel v-bind="settings">
                       <div v-for="file in voucher.file1" :key="file">
-                            <img :src="`http://localhost:8080/api/uploads/${file}`"/>
+                            <img :src="`/api/uploads/${file}`"/>
                       </div>
                     </VueSlickCarousel>
                   </div>
@@ -94,6 +94,7 @@ export default {
       allBusiness: [],
       allBoughtVouchers: [],
       userId: this.$userId,
+      user_id: '',
       settings: {
         arrows: true,
         dots: true,
@@ -149,6 +150,7 @@ export default {
       this.user = decoded;
       let userType = this.user.usertype;
       let user_id =  this.user._id;
+      this.user_id = user_id;
       try {
         let response = await this.$http.post("/voucher/getAllBoughtVouchers", {user_id, userType}, {headers: {
               'Authorization': 'Bearer ' + token,
@@ -166,6 +168,7 @@ export default {
     },
     checkUserType() {
       const userId = this.$userId;
+      
       let companyId = this.$companyId;
       this.param = this.$route.params;
       let companyid =  this.param.aid;
@@ -210,6 +213,7 @@ export default {
       margin: 5px;
       padding: 10px;
       height: 100%;
+      width: max-content;
     }
   }
 </style>

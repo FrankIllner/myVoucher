@@ -76,3 +76,17 @@ exports.hasAdditinalInfos = async (req, res) => {
   }
 };
 
+// pruefen ob Zusatzinfos schon exestieren
+exports.getAdditionalId = async (req, res) => {
+  let userId = req.userData._id;
+  try {
+    let o_additional = await User.findAdditonalId(userId);
+    let additionalId = o_additional[0].additionalId;
+  
+   
+    res.status(201).json({ additionalId });
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
+};
+

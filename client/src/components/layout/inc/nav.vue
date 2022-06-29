@@ -26,7 +26,8 @@
                         <b-dropdown-item v-if="userType == 'registerBusiness'" href="/add-business-voucher">Busniness Partner! Dein Gutschein hier hinterlgen</b-dropdown-item>
                         <b-dropdown-item v-else href="/add-user-voucher">Deinen Gutschein hinterlgen</b-dropdown-item>
 
-                        <b-dropdown-item :href="`/company/${additionalId}/userId/${u_id}`">Mein Profil</b-dropdown-item>
+                        <b-dropdown-item v-if="userType == 'registerBusiness'" :href="`/company/${additionalId}/userId/${u_id}`">Mein Profil</b-dropdown-item>
+                        <b-dropdown-item v-else href="my-wallet">Mein Wallet</b-dropdown-item>
 
                         <b-dropdown-item v-if="userType == 'registerBusiness'" href="/verwaltung">Verwaltung</b-dropdown-item>
 
@@ -72,14 +73,14 @@ export default {
                 let u_id = this.user._id;
                 this.u_id = u_id;
                 this.isLoginLabel = "Logout";
-
+              
                 try {
                     let response = await this.$http.post("/user/getAdditionalId", {u_id}, {headers: {
                         'Authorization': 'Bearer ' + token,
                         'Content-Type': 'application/json',
                         }},
                     );
-                    
+                      console.log(response);
                     if (response) {
                         this.additionalId = response.data.o_additional[0].additionalId;
                     }

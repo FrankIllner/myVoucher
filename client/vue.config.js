@@ -1,6 +1,10 @@
+const fs = require('fs');
 module.exports = {
     devServer: {
-      https: true,
+      https: {
+        key: fs.readFileSync('./cert/localhost+4-key.pem'),
+        cert: fs.readFileSync('./cert/localhost+4.pem'),
+      },
       proxy: {
         '^/api': {
         target: 'http://api.localhost/',
@@ -17,16 +21,7 @@ module.exports = {
         secure: true,
         changeOrigin: true,
         pathRewrite: { '^/qr': '/'}
-      },
-      '^/auth': {
-        target: 'http://192.168.178.26:4000/user/login/',
-        logLevel: "debug",
-        ws: true,
-        secure: true,
-        changeOrigin: true,
-        pathRewrite: { '^/auth': '/'}
-      },
-
+      }
     }
   }
 }

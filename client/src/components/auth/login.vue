@@ -49,7 +49,7 @@
 
 <script>
 import swal from "sweetalert";
-import axios from "axios";
+//import axios from "axios";
 export default {
   name: 'Login',
   data() {
@@ -65,8 +65,8 @@ export default {
   methods: {
     async loginUser() {
       try {
-        let response = await axios.post("/auth", this.login);
-        //let response = await this.$http.post("/user/login", this.login);
+        //let response = await axios.post("/auth", this.login);
+        let response = await this.$http.post("/user/login", this.login);
 
         let token = response.data.token;
         let userType = response.data.user.usertype;
@@ -76,7 +76,7 @@ export default {
        
         if (token) {
       
-          let hasAdditional = await axios.post("/additional", {}, {headers: {
+          let hasAdditional = await this.$http.post("/user/checkAdditional", {}, {headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json',
               }},

@@ -95,13 +95,13 @@ export default {
       let token = localStorage.getItem("jwt");
       this.param = this.$route.params;
       let additionalId = {additionalId: this.param.aid};
-
-      let responseCompany = await this.$http.post("/user/getAdditionalId", additionalId, {headers: {
+      console.log(additionalId);
+      let responseCompany = await this.$http.post("/user/findCompany", additionalId, {headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json',
         }},
       );
-    
+      console.log(responseCompany);
       if (responseCompany) {
         this.companyData = responseCompany.data.dataCompany;
       }

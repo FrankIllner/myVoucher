@@ -1,6 +1,6 @@
 <template>
   <div class="checkout container">
-    <h2>Ihr liegt in Ihrem perösnlichen Bereich!</h2>
+    <h2>Der Gutschein liegt in deinem perösnlichen Bereich!</h2>
   </div>
 </template>
 

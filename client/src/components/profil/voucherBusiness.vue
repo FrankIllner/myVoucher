@@ -54,7 +54,7 @@ export default {
       voucher: {
         selectedCategory: null,
          options: [
-      { value: null, text: 'Um welchen Gutschein Kategorie handelt es sich' },
+          { value: null, text: 'Um welchen Gutschein Kategorie handelt es sich' },
           { value: '1', text: 'Massage' },
           { value: '2', text: 'Bücher' },
           { value: '3', text: 'Kultur' },
@@ -74,21 +74,20 @@ export default {
         let token = localStorage.getItem("jwt");
         let userId = this.user._id;
         this.voucher.userId = userId;
-   
+
         let response = await this.$http.post("/voucher/addBusinessVoucher", this.voucher, {headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
           }},
         );
-     
-        //let token = response.data.token;
+       
+    
         if (response) {
-         
           let voucherBusinessId = response.data.data._id;
           const formData = new FormData();
           formData.append('voucherId', voucherBusinessId);
           formData.append('url', window.location.host);
-  
+    
           axios.post('/qr', formData,
           {
               headers: {
@@ -96,17 +95,24 @@ export default {
               }
           })
           .then(function (response) {
-              console.log(response);
+    
               if (!response.data) {
                   console.log('Problem by generate QR-Code');
               } else {
                   console.log('QR-Code was Generate');
               }
-
           })
 
-          this.$router.push("/company/" + voucherBusinessId + "/userid/" + userId);
-            
+          let o_additionalId = await this.$http.post("/user/getAdditionalId", {userId}, {headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+                }},
+          );
+
+          if (o_additionalId) {
+              let currentAdditionalId = o_additionalId.data.o_additional[0].additionalId;
+              this.$router.push("/company/" + currentAdditionalId + "/userid/" + userId);
+          }
         } else {
           swal("Error", "Gutschein - Error2", "Error");
         }

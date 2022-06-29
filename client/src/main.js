@@ -15,7 +15,7 @@ Vue.prototype.$isLogin = false;
 
 
 const base = axios.create({
-  baseURL: "http://192.168.178.26:4000"
+  baseURL: "https://192.168.178.26:4000"
 });
 
 Vue.prototype.$http = base;
@@ -26,6 +26,7 @@ let token = localStorage.getItem("jwt");
 if (token) {
   Vue.prototype.$isLogin = true;
   let decoded = VueJwtDecode.decode(token);
+
   Vue.prototype.$companyId = decoded.additionalId;
   Vue.prototype.$userId = decoded._id;
   Vue.prototype.$userType = decoded.usertype;
