@@ -8,23 +8,3 @@
         </ul>
     </footer>
 </template>
-
-<style lang="scss" scoped>
-
-    footer {
-        display: flex;
-        margin-top: 5rem;
-        background-color: blueviolet;
-
-    }
-    footer ul  {
-        li {
-        list-style: none;
-        padding: 4px 0;
-            a {
-                list-style: none;
-                color: aliceblue;
-            }
-        }
-    }
-</style>

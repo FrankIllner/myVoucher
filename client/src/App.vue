@@ -21,6 +21,11 @@ export default {
 
 
 <style lang="scss">
+@import "./scss/colors";
+@import "./scss/basic";
+@import "./scss/layout";
+@import "./scss/buttons";
+@import "./scss/company";
   .bg-vue {
     background-color: rgb(52, 73, 94);
     color: white;

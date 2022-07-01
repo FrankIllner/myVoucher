@@ -1,0 +1,77 @@
+html {
+    font-size: calc(15px + 0.390625vw);
+}
+h1 {
+    font-size: 1.8rem !important;
+}
+h2 {
+    font-size: 1.5rem !important;
+}
+h3 {
+    font-size: 1.3rem !important;
+}
+h4 {
+    font-size: 1.1rem;
+}
+h5, h6 {
+    font-size: 0.8rem;
+}
+span, a, b, p {
+    font-size: 0.9rem;    
+}
+.fullscreen-image {
+   .block {
+        background-color: azure;
+        padding: 10px;
+     
+    }
+
+}
+.login-container {
+
+    display: block;
+    margin: auto;
+  
+    form {
+        border-radius: 10px;
+        background-color: azure;
+    }
+}
+
+/* Carousel Image*/
+.slick-slider {
+    img {
+        width: 100%;
+        height: auto;
+        padding-right: 20px;
+    }
+}
+
+/* items cards */
+.group img {
+    width: 100%;
+    height: auto;
+}
+  .voucher-overview .slick-prev:before, .voucher-overview .slick-next:before {
+    color: blueviolet !important;
+  }
+.cards {
+    a {
+    text-decoration: none;
+    color: blueviolet
+    }
+    a:hover {
+        text-decoration: none;
+    }
+    .item {
+        border: 2px solid cadetblue;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 10px;
+        height: 100%;
+        width: auto;
+        span {
+            color: black;
+        }
+    }
+}

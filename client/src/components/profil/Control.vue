@@ -14,7 +14,8 @@
 
             <div class="mt-5">
               <h4>Diese Gutscheine sind noch nicht eingelöst:</h4>
-                <table>
+              <div class="table-responsive">
+                <table class="table">
                     <tr>
                         <th>Gutschein-ID</th>
                         <th>Gutschein-Name</th>
@@ -32,28 +33,30 @@
                 
                     </tr>
                 </table>
-          
+              </div>
             </div>
             <div class="mt-5">
               <h4>Diese Gutscheine sind schon eingelöst</h4>
-                <table>
-                    <tr>
-                        <th>Gutschein-ID</th>
-                        <th>Gutschein-Name</th>
-                        <th>Wert</th>
-                        <th>gültig bis</th>
-                        <th>gekauft von User</th>
-                    </tr>
-                    <tr v-for="boughtVouchers in allBoughtVouchersHistory" :key="boughtVouchers._id" class="col-12 p-2">
+                <div class="table-responsive">
+                  <table class="table">
+                      <tr>
+                          <th>Gutschein-ID</th>
+                          <th>Gutschein-Name</th>
+                          <th>Wert</th>
+                          <th>gültig bis</th>
+                          <th>gekauft von User</th>
+                      </tr>
+                      <tr v-for="boughtVouchers in allBoughtVouchersHistory" :key="boughtVouchers._id" class="col-12 p-2">
+                    
+                          <td><b>{{boughtVouchers._id}}</b></td>
+                          <td> {{boughtVouchers.name}}</td>
+                          <td>{{boughtVouchers.price}}€</td>
+                          <td>{{boughtVouchers.expiryDate}}</td>
+                          <td>{{boughtVouchers.userId}}</td>
                   
-                        <td><b>{{boughtVouchers._id}}</b></td>
-                        <td> {{boughtVouchers.name}}</td>
-                        <td>{{boughtVouchers.price}}€</td>
-                        <td>{{boughtVouchers.expiryDate}}</td>
-                        <td>{{boughtVouchers.userId}}</td>
-                
-                    </tr>
-                </table>
+                      </tr>
+                  </table>
+                </div>
             </div>
           </div>
         </div>
@@ -92,7 +95,7 @@ export default {
               'Content-Type': 'application/json',
             }},
         );
-        console.log(response);
+       
         if (response) {
   
             this.allBoughtVouchers = response.data.vouchers;
@@ -123,6 +126,35 @@ export default {
         console.log(err);
       }
 
+    },
+    async checkVoucher() {
+      
+      this.param = this.$route.params;
+      let buyId = this.param.buy_id;
+      let partnerId = this.param.p_id;
+      if (buyId) {
+        let token = localStorage.getItem("jwt");
+        let decoded = VueJwtDecode.decode(token);
+        this.user = decoded;
+        let userId= this.$userId;
+        // pruefon, ob es der richtige Partner Account ist
+        if (partnerId !== userId) {
+          this.$router.push("/");
+        }
+        try {
+          let response = await this.$http.post("/voucher/checkQr", {buyId}, {headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+              }},
+          );
+        console.log(response);
+          if (response) {
+              this.checkId = response.data.checkBuyId;
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
     },
 
     paintOutline (detectedCodes, ctx) {
@@ -157,13 +189,11 @@ export default {
   },
 
   async created() {
-
+    this.checkVoucher();
     this.getAllBoughtVouchers();
     this.getAllBoughtVouchersHistory();
+    
     this.$root.$refs.AllVouchers = this;
-        this.param = this.$route.params;
-        console.log('#########################');
-    console.log(this.param);
     
   }
 };

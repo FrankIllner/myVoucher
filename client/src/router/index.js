@@ -31,9 +31,12 @@ const routes = [
     component: MyCompany
   },
   {
-    path: "/checkQrCode/buyId/:buy_id/customerId/:c_id/voucherId/:v_id/status/:status",
+    path: "/checkQrCode/buyId/:buy_id/customerId/:c_id/voucherId/:v_id/partnerId/:p_id/status/:status",
     name: "CheckQrCode",
     component: () => import("../components/profil/Control.vue"),
+    meta: {
+      requiresAuth: true
+    }
   },
   
   {

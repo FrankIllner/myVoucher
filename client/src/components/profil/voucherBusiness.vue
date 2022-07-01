@@ -1,11 +1,10 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1">
+      <div class="col-lg-6 offset-lg-3 col-sm-10 offset-sm-1 mt-3">
         <h3>Partner User! Hallo {{this.user.name}} - hier kannst du deine Gutscheine erstellen! </h3>
         <b-form
-          class="text-center border border-primary p-5"
-          style="margin-top:70px;height:auto;padding-top:100px !important;"
+          class="text-center border p-5 mt-5"
           @submit.prevent="addBusinessVoucher"
         >
           <b-form-select id="category" v-model="voucher.selectedCategory" :options="voucher.options"></b-form-select>

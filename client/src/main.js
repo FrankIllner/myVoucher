@@ -19,6 +19,8 @@ const base = axios.create({
 });
 
 Vue.prototype.$http = base;
+
+
 Vue.config.productionTip = false;
 Vue.prototype.$userType = '';
 let token = localStorage.getItem("jwt");

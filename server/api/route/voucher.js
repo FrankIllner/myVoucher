@@ -9,6 +9,7 @@ router.post("/addBusinessVoucher",auth, voucherBusinessController.addBusinessVou
 router.post("/getAllVouchers",auth, voucherController.getAllVouchers);
 router.post("/toBasket",auth, voucherBusinessController.addItemToBasket);
 router.post("/buyVoucher",auth, voucherBusinessController.buyVoucher);
+router.post("/checkQr",auth, voucherBusinessController.checkQrCode);
 router.post("/findVouchers", voucherBusinessController.getVoucher);
 router.post("/getAllBoughtVouchers", auth, voucherBusinessController.getBoughtVouchersId);
 router.post("/getAllBoughtVouchersHistory", auth, voucherBusinessController.getBoughtVouchersHistory);

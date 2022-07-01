@@ -16,7 +16,7 @@
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna 
                     </span>
                 </div>
-                <div class="col-12 mt-5">
+                <div class="col-12 col-xs-12 mt-5">
                     <div class="button center" v-if="this.$userType !== 'registerBusiness'">
                         <router-link to="/register-business">Partner werden</router-link>
                     </div>
@@ -38,7 +38,7 @@
                             <span>{{business.postcode}} {{business.city}}</span><br />
                             <span>{{business.phone}}</span><br />
                             <span>{{business.businessNo}}</span><br />
-                            <span>{{business.userId}}</span><br />
+                        
                             </div>
                         </router-link>
                         </div>
@@ -93,37 +93,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss">
-    .fullscreen-image {
-        .block {
-            background-color: azure;
-            padding: 10px;
-         
-        }
-
-    }
-    .login-container {
-        form {
-            border-radius: 10px;
-            background-color: azure;
-        }
-    }
-    .button {
-        text-align: center;
-        display: flex;
-        justify-content: center;
-    }
-    .button a {
-        background-color: cadetblue;
-        padding: 20px;
-        border: 1px solid brown;
-        color: black;
-        border-radius: 10px;
-        text-align: center;
-        width: 50%;
-        text-decoration: none;
-        font-size: 20px;
-    }
-
-</style>

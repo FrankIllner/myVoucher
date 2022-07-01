@@ -4,8 +4,6 @@
             <b-navbar-brand class="logo" href="/"><img src="../../../assets/img/logo.png"></b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-          {{this.isLogin}}
-          {{this.$userType}}
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav v-if="isLogin && userType !== 'registerBusiness'">
                     <b-nav-item href="/my-wallet">Alle Angebote/Wallet</b-nav-item>
@@ -27,7 +25,7 @@
                         <b-dropdown-item v-else href="/add-user-voucher">Deinen Gutschein hinterlgen</b-dropdown-item>
 
                         <b-dropdown-item v-if="userType == 'registerBusiness'" :href="`/company/${additionalId}/userId/${u_id}`">Mein Profil</b-dropdown-item>
-                        <b-dropdown-item v-else href="my-wallet">Mein Wallet</b-dropdown-item>
+                        <b-dropdown-item v-else href="/my-wallet">Mein Wallet</b-dropdown-item>
 
                         <b-dropdown-item v-if="userType == 'registerBusiness'" href="/verwaltung">Verwaltung</b-dropdown-item>
 
@@ -108,33 +106,3 @@ export default {
 
 };
 </script>
-
-<style lang="scss">
-    nav .logo img {
-        height: 100px;
-        width: auto;
-    }
-    #nav-collapse .navbar-nav .nav-item a  {
-        color: aliceblue; 
-        span {
-            color: aliceblue;
-        }
-    }
-    #nav-collapse {
-        .highligting {
-            padding: 0px;
-            border-radius: 10px;
-            background-color: cadetblue;
-        }
-    }
-     #nav-collapse {
-        .dropdown-menu {
-            background-color: lightseagreen;
-            .dropdown-item:hover {
-                &:hover {
-                    background-color: lightblue;
-                }
-            }
-        }
-     }
-</style>

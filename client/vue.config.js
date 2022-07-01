@@ -18,7 +18,7 @@ module.exports = {
         target: 'http://qr.localhost/',
         logLevel: "debug",
         ws: true,
-        secure: true,
+        secure: false,
         changeOrigin: true,
         pathRewrite: { '^/qr': '/'}
       }

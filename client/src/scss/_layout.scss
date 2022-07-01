@@ -1,0 +1,49 @@
+header {
+    background-color: blueviolet;
+
+    nav .logo img {
+        height: 100px;
+        width: auto;
+    }
+    #nav-collapse .navbar-nav .nav-item a  {
+        color: aliceblue; 
+        span {
+            color: aliceblue;
+        }
+    }
+    #nav-collapse {
+        .highligting {
+            padding: 0px;
+            border-radius: 10px;
+            background-color: cadetblue;
+        }
+    }
+     #nav-collapse {
+        .dropdown-menu {
+            background-color: lightseagreen;
+            .dropdown-item:hover {
+                &:hover {
+                    background-color: lightblue;
+                }
+            }
+        }
+     }
+}
+
+
+
+footer {
+    display: flex;
+    margin-top: 5rem;
+    background-color: blueviolet;
+    ul  {
+        li {
+        list-style: none;
+        padding: 4px 0;
+            a {
+                list-style: none;
+                color: aliceblue;
+            }
+        }
+    }
+}

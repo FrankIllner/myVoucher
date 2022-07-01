@@ -28,7 +28,6 @@ basketSchema.statics.getVoucher = async (voucher_id) => {
 // die gekauften Gutschein abspeichern - mit den wichtigen Paramtern
 basketSchema.statics.buyVoucher = async (offer_voucher_id, partner_id, user_id, status) => {
   const buyVouchers = await Basket.create({"offer_voucher_id": offer_voucher_id,"userId": user_id, "partnerId": partner_id, "status": status});
-
   if (!buyVouchers) {
     throw new Error({ error: "Fehler bei Gutschein kauf" });
   }
@@ -62,7 +61,7 @@ basketSchema.statics.getVoucherId = async (user_id, user_type) => {
   return buyVouchers;
 };
 
-// allte schon eingelösten Gutscheine
+// alle schon eingelösten Gutscheine
 basketSchema.statics.getVoucherIdHistory = async (user_id) => {
 
   let vocherIdsBuy = [];
@@ -80,6 +79,18 @@ basketSchema.statics.getVoucherIdHistory = async (user_id) => {
   }
   return buyVouchersHistory;
 };
+
+// pruefen auf BuyId - gibt es die, dann wird sie auf gekauft gesetzt
+basketSchema.statics.checkId = async (buyId) => {
+  let checkAndUpdateVoucher = await Basket.findByIdAndUpdate(buyId, {status: true});
+  if (!checkAndUpdateVoucher) {
+    throw new Error({ error: "Fehler bei Gutschein kauf" });
+  }
+ 
+  return checkAndUpdateVoucher;
+};
+
+
 
 
 const Basket = mongoose.model("Basket", basketSchema);

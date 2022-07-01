@@ -34,7 +34,7 @@
                     <span><label>Gutschein-Wert: </label> {{boughtVouchers.price}}€</span><br />
                     <span><label>Bekommen von: </label>{{boughtVouchers.fromPerson}}</span><br />
                     <span><label>Gutschein läuft am </label> {{boughtVouchers.expiryDate}} ab</span>
-                    <span> <img :src="`/qr/images/${user_id}-${boughtVouchers._id}.png`" /></span>
+                    <div> <img :src="`/qr/images/${user_id}-${boughtVouchers._id}.png`" /></div>
                   </div>
                 </div>
               </div>
@@ -193,28 +193,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-  .voucher-overview .group img {
-    width: 100%;
-    height: auto;
-  }
-  .voucher-overview .slick-prev:before, .voucher-overview .slick-next:before {
-    color: blueviolet !important;
-  }
-  .voucher-overview .cards {
-      a {
-        text-decoration: none;
-      }
-     .item {
-      border: 1px solid #CCC;
-      border-radius: 10px;
-      box-shadow: 2px 2px 6px 3px;
-      margin: 5px;
-      padding: 10px;
-      height: 100%;
-      width: max-content;
-    }
-  }
-</style>
-

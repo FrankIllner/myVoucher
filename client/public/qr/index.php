@@ -11,7 +11,7 @@ if ($_POST['buyVoucherQr']) {
     $status = $_POST['status'];
     $filename = $customer_id."-".$voucher_id.".png";
     $file = $path.$filename;
-    $text = 'https://'.$url."/checkQrCode/buyId/".$buy_id."/customerId/".$customer_id."/voucherId/".$voucher_id."/status/".$status;
+    $text = 'https://'.$url."/checkQrCode/buyId/".$buy_id."/customerId/".$customer_id."/voucherId/".$voucher_id."/partnerId/".$partner_id."/status/".$status;
    
 } else {
 

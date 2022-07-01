@@ -17,9 +17,7 @@
             <h5 class="font-weight-bold">{{priceWithTax}}</h5>
             </li>
         </ul>
-        {{allSelectedVouchers}}
-
-       
+  
         <button
             class="btn bg-vue2 rounded-pill py-2 btn-block"
             @click="buyVoucher(allSelectedVouchers)"

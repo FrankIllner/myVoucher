@@ -103,12 +103,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-
-  .login-container {
-    display: flex;
-    margin: auto;
-  }
-
-</style>

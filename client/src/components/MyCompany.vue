@@ -1,27 +1,26 @@
 <template>
     <div class="container-main">
       <div class="container company">
-        <b>{{userid}}</b>
+     
         <div class="aboutus" v-for="company in companyData" :key="company._id" >
 
-          <h1 class="mt-5">Mein Unternhemen: {{company.company}} {{company._id}}</h1>
+          <h1 class="mt-5">Mein Unternhemen: {{company.company}}</h1>
           <div class="mt-3">{{company.aboutus}}</div>
           
           <div class="row mt-5">
-            <div class="col-xs-12 col-md-6">
-              {{company.street}} {{company.streetNo}} <br />
-              {{company.postcode}}  {{company.city}} <br />
+            <div class="col-6 col-md-6">
+              <span>{{company.street}} {{company.streetNo}}</span> <br />
+              <span>{{company.postcode}}  {{company.city}}</span> <br />
+              <span>Gewebenummer{{company.businessNo}}</span><br />
             </div>
-            <div class="col-xs-12 col-md-6">
-              {{company.businessNo}} <br />
-              {{company.opening}} <br />
-              {{company.phone}}
+            <div class="col-6 col-md-6">
+              <span>{{company.opening}}</span> <br />
+              <span>{{company.phone}}</span>
             </div>
           </div>
           <div class="group cards rows">
             
                 <div class="item">
-                
                   <VueSlickCarousel v-bind="settings">
                     <div v-for="file in company.file1" :key="file">
                         <img :src="`/api/uploads/${file}`" />
@@ -34,7 +33,7 @@
         <div class="mt-3">
           <h2 v-if="voucherData.length > 0">Wir bieten diese Gutscheine an</h2>
 
-          <div class="myVoucher card col-md-3 col-sm-4 col-xs-12" v-for="voucher in voucherData" :key="voucher._id" v-bind:id="voucher._id">
+          <div class="myVoucher card col-md-4 col-sm-4 col-xs-12" v-for="voucher in voucherData" :key="voucher._id" v-bind:id="voucher._id">
             <div class="item">
               <h6>Gutschein: {{voucher.name}}</h6>
               <span>Wert: {{voucher.price}}</span><br />
@@ -43,10 +42,11 @@
               <div class="postion-bottom">
                 <div v-if="sameUser">
                   <span class="mt-4 mb-2"> <img :src="`/qr/images/${voucher._id}.png`" /></span>
-                  <span> <a href="#" class="mr-3" @click="edit(voucher._id)">editieren</a></span>
-                  <span><a href="#" class="mr-4" @click="del(voucher._id)">löschen</a></span>
-                  <span><a href="#">drucken</a></span>
-               
+                  <div>
+                    <span> <a href="#" class="mr-3" @click="edit(voucher._id)">editieren</a></span>
+                    <span><a href="#" class="mr-4" @click="del(voucher._id)">löschen</a></span>
+                    <span><a href="#">drucken</a></span>
+                  </div>
                 </div>
                 <div v-else>
                   <a href="#" class="mr-5" @click="addVoucher(voucher._id)">in den Warenkorb</a>
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-          <p v-if="sameUser"> <router-link to="/add-business-voucher">Fügen Sie einen Gutschein hinzu!</router-link></p>
+          <div v-if="sameUser" class="button mt-5"> <router-link to="/add-business-voucher">Fügen Sie einen Gutschein hinzu!</router-link></div>
         </div>
       </div>
     </div>

@@ -91,5 +91,15 @@ exports.getBoughtVouchersHistory = async (req, res) => {
     console.log('Gutscheine Verwaltung History- false')
     res.status(400).json({ err: err });
   }
- 
+}
+
+exports.checkQrCode = async (req, res) => {
+  let buyId = req.body.buyId;
+  try {
+    let checkBuyId = await Basket.checkId(buyId);
+    res.status(201).json({ checkBuyId });
+  } catch (err) {
+    console.log('Gutscheine Id - false')
+    res.status(400).json({ err: err });
+  }
 }
