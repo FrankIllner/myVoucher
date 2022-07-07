@@ -1,48 +1,50 @@
 <template>
     <div class="container">
-        <b-navbar toggleable="lg" type="dark">
-            <b-navbar-brand class="logo" href="/"><img src="../../../assets/img/logo.png"></b-navbar-brand>
-
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-            <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav v-if="isLogin && userType !== 'registerBusiness'">
-                    <b-nav-item href="/my-wallet">Alle Angebote/Wallet</b-nav-item>
-                </b-navbar-nav>
+            <div class="row header-headlines">
+                <div class="logo col-3"><a href="/"><img src="../../../assets/img/logo.png"></a></div>
+                <div class="col-8" v-if="isLogin && userType !== 'registerBusiness'">
+                    <a href="/my-wallet" class="d-block">Alle Angebote/Wallet</a>
+                </div>
+            </div>
+            <div class="">
+        
 
                 <!-- Right aligned nav items -->
-                <b-navbar-nav class="ml-auto">
-                    <b-nav-item class="highligting" v-if="userType !== 'registerBusiness'" href="/register-business">Partner werden</b-nav-item>
-                    <b-nav-item-dropdown text="Lang" right>
-                        <b-dropdown-item href="#">EN</b-dropdown-item>
-                    </b-nav-item-dropdown>
-                    <div v-if="isLogin">
-                        <b-nav-item-dropdown right>
-                        <!-- Using 'button-content' slot -->
-                        <template #button-content>
-                            <b>User {{username}} </b>
-                        </template>
-                        <b-dropdown-item v-if="userType == 'registerBusiness'" href="/add-business-voucher">Busniness Partner! Dein Gutschein hier hinterlgen</b-dropdown-item>
-                        <b-dropdown-item v-else href="/add-user-voucher">Deinen Gutschein hinterlgen</b-dropdown-item>
+                 <Slide right>
+                    
+               
+                    <div v-if="isLogin" class="d-block">
+                    
+                       <b>User {{username}} </b><br />
+                     
+                      
+                        <a v-if="userType == 'registerBusiness'" href="/add-business-voucher">Deine Gutscheine  hinterlgen</a><br />
 
-                        <b-dropdown-item v-if="userType == 'registerBusiness'" :href="`/company/${additionalId}/userId/${u_id}`">Mein Profil</b-dropdown-item>
-                        <b-dropdown-item v-else href="/my-wallet">Mein Wallet</b-dropdown-item>
+                        <a v-if="userType == 'registerBusiness'" :href="`/company/${additionalId}/userId/${u_id}`">Mein Profil</a>
+                        <a v-else href="/my-wallet">Mein Wallet</a>
+                        <br />
+                        <a v-if="userType == 'registerBusiness'" href="/verwaltung">Verwaltung</a><br />
 
-                        <b-dropdown-item v-if="userType == 'registerBusiness'" href="/verwaltung">Verwaltung</b-dropdown-item>
-
-                        <b-dropdown-item @click="logUserOut" href="#">{{isLoginLabel}}</b-dropdown-item>
-                        </b-nav-item-dropdown>
+                        <a @click="logUserOut" href="#">{{isLoginLabel}}</a><br />
+                     
                     </div>
-                </b-navbar-nav>
-            </b-collapse>
-        </b-navbar>
+                    <div class="d-block">
+                        <a class="highligting" v-if="userType !== 'registerBusiness'" href="/register-business">Partner werden</a><br />
+                        <a class="highligting" href="/agb">AGB's</a><br />
+                        <a class="highligting" href="/wir">Über uns</a><br />
+                        <a class="highligting" href="/kontakt">Kontakt</a><br />
+                    </div>
+                 </Slide>
+            </div>
     </div>
 
 </template>
 
 <script>
 import VueJwtDecode from "vue-jwt-decode";
-
+import { Slide } from 'vue-burger-menu';
 export default {
+    components: {Slide},
     data() {
         return { 
             isLoginLabel: '',

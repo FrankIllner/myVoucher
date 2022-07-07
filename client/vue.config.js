@@ -21,6 +21,14 @@ module.exports = {
         secure: false,
         changeOrigin: true,
         pathRewrite: { '^/qr': '/'}
+      },
+      '^/mail': {
+        target: 'http://mail.localhost/',
+        logLevel: "debug",
+        ws: true,
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: { '^/mail': '/'}
       }
     }
   }

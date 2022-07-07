@@ -65,32 +65,32 @@ export default {
             
             if (buyVoucher) {
           
-            const formData = new FormData();
-            formData.append('buy_id', buyVoucher.data.dataBuyBasket._id);
-            formData.append('user_id', user_id);
-            formData.append('partner_id', partner_id);
-            formData.append('offer_voucher_id', offer_voucher_id);
-            formData.append('status', status);
-            formData.append('url', window.location.host);
-            formData.append('buyVoucherQr', true);
-    
-            axios.post('/qr', formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then(function (response) {
-                console.log(response);
-                if (!response.data) {
-                    console.log('Problem by generate QR-Code');
-                } else {
-                    console.log('QR-Code was Generate');
-                }
+                const formData = new FormData();
+                formData.append('buy_id', buyVoucher.data.dataBuyBasket._id);
+                formData.append('user_id', user_id);
+                formData.append('partner_id', partner_id);
+                formData.append('offer_voucher_id', offer_voucher_id);
+                formData.append('status', status);
+                formData.append('url', window.location.host);
+                formData.append('buyVoucherQr', true);
+        
+                axios.post('/qr', formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(function (response) {
+                    console.log(response);
+                    if (!response.data) {
+                        console.log('Problem by generate QR-Code');
+                    } else {
+                        console.log('QR-Code was Generate');
+                    }
 
-            })
+                })
                 localStorage.removeItem("myBasketItems");
-                this.$router.push("/checkout/");
+                this.$router.push("/checkout-pay/");
             } else {
                 swal("Error", "Probleme beim Kauf des Gutschein - Error-13343", "Error");
             }

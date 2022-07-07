@@ -101,6 +101,7 @@ export default {
                 }
             })
             .then(function (response) {
+                  console.log('response');
                 console.log(response);
                 if (!response.data) {
                     console.log('Sorry File not uploaded.');

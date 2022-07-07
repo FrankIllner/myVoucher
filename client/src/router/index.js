@@ -5,6 +5,7 @@ import About from "../pages/About.vue";
 import Start from "../pages/Start.vue";
 import PartnerControl from "../pages/PartnerControl.vue";
 import Checkout from "../pages/Checkout.vue";
+import CheckoutStripe from "../pages/secure/StripeCheckout.vue";
 import MyCompany from "../pages/MyCompany.vue";
 import AdditinalUsers from "../pages/Additional.vue";
 import Basket from "../pages/secure/Basket.vue";
@@ -102,7 +103,12 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  }
+  },  
+  {
+    path: "/checkout-pay",
+    name: "stripeCheckout",
+    component: CheckoutStripe
+  },
 ];
 
 const router = new VueRouter({

@@ -1,36 +1,17 @@
 header {
     background-color: blueviolet;
 
-    nav .logo img {
+    .logo img {
         height: 100px;
         width: auto;
     }
-    #nav-collapse .navbar-nav .nav-item a  {
-        color: aliceblue; 
-        span {
-            color: aliceblue;
+    .header-headlines {
+        a {
+            color: white;
+            margin-top: 62px;
         }
     }
-    #nav-collapse {
-        .highligting {
-            padding: 0px;
-            border-radius: 10px;
-            background-color: cadetblue;
-        }
-    }
-     #nav-collapse {
-        .dropdown-menu {
-            background-color: lightseagreen;
-            .dropdown-item:hover {
-                &:hover {
-                    background-color: lightblue;
-                }
-            }
-        }
-     }
 }
-
-
 
 footer {
     display: flex;

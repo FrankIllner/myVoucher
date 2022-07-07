@@ -26,6 +26,8 @@ export default {
 @import "./scss/layout";
 @import "./scss/buttons";
 @import "./scss/company";
+@import "./scss/menu";
+@import "./scss/checkout";
   .bg-vue {
     background-color: rgb(52, 73, 94);
     color: white;

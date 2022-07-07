@@ -65,6 +65,7 @@
 
 <script>
 import swal from "sweetalert";
+import axios from "axios";
 
 export default {
   data() {
@@ -87,9 +88,30 @@ export default {
         let token = response.data.token;
       
         if (token) {
+          const formData = new FormData();
+          formData.append('name', this.register.name);
+          formData.append('mail', this.register.email);
+          formData.append('sendMailRegist', true);
+  
+          axios.post('/mail', formData,
+          {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+          .then(function (response) {
+            console.log('mailObj');
+              console.log(response);
+              if (!response.data) {
+                  console.log('E-Mail konnte nicht gesendet werden');
+              } else {
+                  console.log('E-Mail gesendet!');
+              }
+
+          })
           localStorage.setItem("jwt", token);
           this.$router.push("/");
-          swal("Success", "Registration Was successful", "success");
+          swal("Success", "Super - du bekommst eine E-Mail von uns! ", "success");
 
         } else {
           swal("Error", "Something Went Wrong", "Error");
