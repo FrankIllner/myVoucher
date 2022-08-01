@@ -15,7 +15,7 @@ exports.registerNewUser = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       usertype: req.body.usertype,
-      status: false
+      userstatus: req.body.userstatus,
     });
     let data = await user.save();
     const token = await user.generateAuthToken(); // here it is calling the method that we created in the model
@@ -64,5 +64,19 @@ exports.getAdditionalById = async (req, res) => {
     res.status(400).json({ err: err });
   }
 };
+
+
+// prueft ob Account freigeschaltet ist
+exports.getUserStatus = async (req, res) => {
+  let userId = req.userData._id;
+  try {
+    let isActive = await User.checkUserStatus(userId);
+    res.status(201).json({ isActive });
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
+};
+
+
 
 

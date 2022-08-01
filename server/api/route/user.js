@@ -9,6 +9,7 @@ router.post("/login", userController.loginUser);
 router.post("/registerBusiness", auth, userBusinessController.registerBusinessAdditional);
 router.post("/me", auth, userController.getUserDetails);
 router.post("/getAdditionalId", auth, userController.getAdditionalById);
+router.post("/getUserStatus", auth, userController.getUserStatus);
 router.post("/checkAdditional", auth, userBusinessController.hasAdditinalInfos);
 router.post("/getAllBusiness",auth, userBusinessController.getAllBusinessUser);
 router.post("/findCompany", userBusinessController.getCompany);

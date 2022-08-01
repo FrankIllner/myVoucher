@@ -72,7 +72,22 @@ export default {
         let userType = response.data.user.usertype;
         let additonalId = response.data.user.additionalId;
         let u_id = response.data.user._id;
-        localStorage.setItem("jwt", token);
+            try {
+                let response = await this.$http.post("/user/getUserStatus", {u_id}, {headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                    }},
+                );
+                    
+                if (response.data.isActive === true) {
+                    console.log(response.data.isActive);
+                    localStorage.setItem("jwt", token);
+                } else {
+                  swal("Info", "Sie müssen evtl. Ihre E-Mails püfen und Ihren Account aktivieren", "info");
+                }
+            } catch (err) {
+                console.log(err);
+            }
        
         if (token) {
       

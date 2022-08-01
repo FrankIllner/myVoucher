@@ -75,6 +75,7 @@ export default {
         email: "",
         password: "",
         usertype: this.$route.name,
+        userstatus: false,
         infoCustomer:  'Melde Dich an und speichere Deine ganzen Papier Gutscheine in die App! ',
         infoBusiness: 'Werde Partner bei uns und verdiene mit den Verkauf....'
       }
@@ -86,11 +87,14 @@ export default {
       try {
         let response = await this.$http.post("user/register", this.register);
         let token = response.data.token;
-      
+        console.log('response');
+        console.log(response);
         if (token) {
           const formData = new FormData();
           formData.append('name', this.register.name);
           formData.append('mail', this.register.email);
+          formData.append('user_id', response.data.data._id)
+          formData.append('url', window.location.host);
           formData.append('sendMailRegist', true);
   
           axios.post('/mail', formData,

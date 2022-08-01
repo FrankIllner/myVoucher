@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
   usertype: {
     type: String
   },
+  userstatus: {
+    type: Boolean
+  },
   additionalId: {
     type: mongoose.Schema.Types.ObjectId
   },
@@ -43,7 +46,7 @@ userSchema.pre("save", async function(next) {
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
   const token = jwt.sign(
-    { _id: user._id, name: user.name, email: user.email, usertype: user.usertype , additionalId: user.additionalId},
+    { _id: user._id, name: user.name, email: user.email, usertype: user.usertype, userstatus: user.userstatus, additionalId: user.additionalId},
     "secret"
   );
   user.tokens = user.tokens.concat({ token });
@@ -68,13 +71,21 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 // gibt den aktuellen User zurück
 userSchema.statics.findAdditonalId = async (id) => {
-
   const o_user = await User.find({_id: id});
-
   if (!o_user) {
     throw new Error({ error: "keine Unternhemen gefunden" });
   }
   return o_user;
+};
+
+// prueft den aktuellen User, ob der Account freigeschlatet ist
+userSchema.statics.checkUserStatus = async (id) => {
+  const o_user = await User.findOne({_id: id});
+             
+  if (!o_user) {
+    throw new Error({ error: "User Id nicht gefunden" });
+  }
+  return o_user.userstatus;
 };
 
 

@@ -30,9 +30,11 @@ if ($_POST['sendMailRegist']) {
         //$mail->addAttachment('/backup/test.log');
     
         //Content
+        $link= 'https://'.$_POST['url']."/activated/userId/".$_POST['user_id'];
+   
         $mail->isHTML(true); 
         $mail->Subject = 'Deine Registrierung bei Kieztreu!';
-        $mail->Body    = 'Hallo' . $_POST['name']. '! <br /> <br />' . 'Der Link kommt noch!';
+        $mail->Body    = 'Hallo' . $_POST['name']. '! <br /> <br />' . 'Mit diesem Link kannst du deinen Account freischalten:'.$link;
     
         $mail->send();
         echo 'Message has been sent';

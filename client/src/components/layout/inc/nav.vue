@@ -7,17 +7,11 @@
                 </div>
             </div>
             <div class="">
-        
-
                 <!-- Right aligned nav items -->
                  <Slide right>
-                    
-               
                     <div v-if="isLogin" class="d-block">
                     
                        <b>User {{username}} </b><br />
-                     
-                      
                         <a v-if="userType == 'registerBusiness'" href="/add-business-voucher">Deine Gutscheine  hinterlgen</a><br />
 
                         <a v-if="userType == 'registerBusiness'" :href="`/company/${additionalId}/userId/${u_id}`">Mein Profil</a>
@@ -63,38 +57,49 @@ export default {
         },
         async checklogin () {
             let token = localStorage.getItem("jwt");
-   
-            if (this.$isLogin || token) {
-                let decoded = VueJwtDecode.decode(token);
-                this.user = decoded;
-                this.isLogin = true;
-                this.username = this.user.name;
-                this.userType = this.user.usertype;
-                let u_id = this.user._id;
-                this.u_id = u_id;
-                this.isLoginLabel = "Logout";
-              
-                try {
-                    let response = await this.$http.post("/user/getAdditionalId", {u_id}, {headers: {
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/json',
-                        }},
-                    );
-                      console.log(response);
-                    if (response) {
-                        this.additionalId = response.data.o_additional[0].additionalId;
+            let decoded = VueJwtDecode.decode(token);
+            this.user = decoded;
+            let checkUserId = this.user._id;
+            try {
+                let response = await this.$http.post("/user/getUserStatus", {checkUserId}, {headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json',
+                    }},
+                );
+                    
+                if (response.data.isActive === true) {
+                    let decoded = VueJwtDecode.decode(token);
+                    this.user = decoded;
+                    this.isLogin = true;
+                    this.username = this.user.name;
+                    this.userType = this.user.usertype;
+                    let u_id = this.user._id;
+                    this.u_id = u_id;
+                    this.isLoginLabel = "Logout";
+                
+                    try {
+                        let response = await this.$http.post("/user/getAdditionalId", {u_id}, {headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Content-Type': 'application/json',
+                            }},
+                        );
+                        console.log(response);
+                        if (response) {
+                            this.additionalId = response.data.o_additional[0].additionalId;
+                        }
+                    } catch (err) {
+                        console.log(err);
                     }
-                } catch (err) {
-                    console.log(err);
+
+                } else {
+                    this.username = '';
+                    this.isLoginLabel = "Login";
+                    this.isLogin = false;
                 }
-
-
-            } else {
-                this.username = '';
-                this.isLoginLabel = "Login";
-                this.isLogin = false;
+            } catch (err) {
+                console.log(err);
             }
-
+   
         }
     },
     created() {
