@@ -32,6 +32,11 @@ const routes = [
     component: MyCompany
   },
   {
+    path: "/activated/userId/:uid",
+    name: "ActivatedUser",
+    component: () => import("../components/auth/UserActivated.vue"),
+  },
+  {
     path: "/checkQrCode/buyId/:buy_id/customerId/:c_id/voucherId/:v_id/partnerId/:p_id/status/:status",
     name: "CheckQrCode",
     component: () => import("../components/profil/Control.vue"),
@@ -63,10 +68,7 @@ const routes = [
   {
     path: "/register-additional",
     name: "registerBusinessAdditional",
-    component: AdditinalUsers,
-    meta: {
-      requiresAuth: true
-    }
+    component: AdditinalUsers
   },
   {
     path: "/register-business",

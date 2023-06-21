@@ -66,7 +66,7 @@ export default {
                     'Content-Type': 'application/json',
                     }},
                 );
-                    
+                console.log(response.data)
                 if (response.data.isActive === true) {
                     let decoded = VueJwtDecode.decode(token);
                     this.user = decoded;

@@ -15,7 +15,7 @@ if ($_POST['sendMailRegist']) {
         $mail->Host = 'smtp.web.de';
         $mail->SMTPAuth = true;
         $mail->Username = 'frankillner@web.de';
-        $mail->Password = 'Franky30#';
+        $mail->Password = '10Hacky30#';
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
         
@@ -34,7 +34,7 @@ if ($_POST['sendMailRegist']) {
    
         $mail->isHTML(true); 
         $mail->Subject = 'Deine Registrierung bei Kieztreu!';
-        $mail->Body    = 'Hallo' . $_POST['name']. '! <br /> <br />' . 'Mit diesem Link kannst du deinen Account freischalten:'.$link;
+        $mail->Body    = 'Hallo' . $_POST['name']. '! <br /> <br />' . 'Mit diesem Link kannst du deinen Account freischalten: </ br><a href="'.$link.'">Account freischalten</a>';
     
         $mail->send();
         echo 'Message has been sent';

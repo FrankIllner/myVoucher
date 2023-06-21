@@ -33,12 +33,13 @@ exports.loginUser = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const user = await User.findByCredentials(email, password);
- 
-    if (!user) {
+  
+    if (!user || !user.userstatus) {
       return res
-        .status(401)
+        .status(404)
         .json({ error: "Login failed! Check authentication credentials" });
     }
+
     const token = await user.generateAuthToken();
     res.status(201).json({ user, token });
   } catch (err) {
@@ -65,13 +66,24 @@ exports.getAdditionalById = async (req, res) => {
   }
 };
 
-
 // prueft ob Account freigeschaltet ist
 exports.getUserStatus = async (req, res) => {
   let userId = req.userData._id;
   try {
     let isActive = await User.checkUserStatus(userId);
     res.status(201).json({ isActive });
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
+};
+
+// schaltet Account frei
+exports.userActivated = async (req, res) => {
+  console.log(req);
+  let userId = req.userData._id;
+  try {
+    let isActivated = await User.activatedUser(userId);
+    res.status(201).json({ isActivated });
   } catch (err) {
     res.status(400).json({ err: err });
   }

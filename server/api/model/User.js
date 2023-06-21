@@ -88,6 +88,17 @@ userSchema.statics.checkUserStatus = async (id) => {
   return o_user.userstatus;
 };
 
+// setzt userstatus auf true
+userSchema.statics.activatedUser = async (id) => {
+  const userActivated = await User.findByIdAndUpdate(id, {userstatus: true});
+             
+  if (!userActivated) {
+    throw new Error({ error: "User konnte nicht freigeschaktet werden" });
+  }
+  return true;
+};
+
+
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

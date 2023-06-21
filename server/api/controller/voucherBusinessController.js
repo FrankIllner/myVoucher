@@ -7,7 +7,6 @@ exports.addBusinessVoucher = async (req, res) => {
   try {
 
     const voucherbusiness = new VoucherBusiness({
-      selectedCategory: req.body.selectedCategory,
       expiryDate: req.body.expiryDate,
       name: req.body.name,
       price: req.body.price,

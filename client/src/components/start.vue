@@ -16,19 +16,20 @@
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna 
                     </span>
                 </div>
-                <div class="col-12 col-xs-12 mt-5">
-                    <div class="button center" v-if="this.$userType !== 'registerBusiness'">
+                {{$isLogin}}
+                <div class="col-12 col-xs-12 mt-5" v-if="!$isLogin">
+                    <div class="button center">
                         <router-link to="/register-business">Partner werden</router-link>
                     </div>
                 </div>
                 <div class="col-12">
-                    <div v-if="isLogin">  
+                    <div v-if="!$isLogin">  
                         <Login />
                     </div>
                 </div>
 
                 <div class="voucher-overview mt-4" v-if="this.$userType !== 'registerBusiness'">
-                    <h2 v-if="!isLogin">Akktuelle Gutscheine in deinem Umkreis</h2>
+                    <h2 v-if="$isLogin">Akktuelle Gutscheine in deinem Umkreis</h2>
                     <div class="group cards row">
                         <div v-for="business in allBusiness" :key="business._id" class="col-xs-12 col-sm-6 col-md-4 p-2">
                         <router-link :to="'/company/' + business._id + '/userid/' + business.userId">
@@ -61,16 +62,18 @@ export default {
     },
     data() {
         return { 
-            isLogin: !this.$isLogin,
+            isLogin: '',
             allBusiness: [],
         }
     },
     methods: {
         async getAllBusiness() {
             let token = localStorage.getItem("jwt");
+            console.log(token);
             let decoded = VueJwtDecode.decode(token);
             this.user = decoded;
-
+   
+        
             try {
                 let response = await this.$http.post("/user/getAllBusiness", {}, {headers: {
                     'Authorization': 'Bearer ' + token,

@@ -11,20 +11,13 @@ import "../src/assets/scss/app.scss"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.prototype.$isLogin = false;
-
-
-const base = axios.create({
-  baseURL: "https://192.168.178.26:4000"
-});
-
-Vue.prototype.$http = base;
-
 
 Vue.config.productionTip = false;
+Vue.prototype.$isLogin = false;
 Vue.prototype.$userType = '';
 let token = localStorage.getItem("jwt");
-
+console.log('token');
+console.log(token);
 if (token) {
   Vue.prototype.$isLogin = true;
   let decoded = VueJwtDecode.decode(token);
@@ -33,6 +26,13 @@ if (token) {
   Vue.prototype.$userId = decoded._id;
   Vue.prototype.$userType = decoded.usertype;
 } 
+
+const base = axios.create({
+  baseURL: "https://192.168.178.26:4000"
+});
+
+Vue.prototype.$http = base;
+
 
 new Vue({
   router,

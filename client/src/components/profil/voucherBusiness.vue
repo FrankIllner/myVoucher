@@ -7,8 +7,7 @@
           class="text-center border p-5 mt-5"
           @submit.prevent="addBusinessVoucher"
         >
-          <b-form-select id="category" v-model="voucher.selectedCategory" :options="voucher.options"></b-form-select>
-          <div class="mt-3">Selected: <strong>{{ voucher.selectedCategory }}</strong></div>
+       
           
           <b-input
             type="text"
@@ -51,15 +50,7 @@ export default {
   data() {
     return {
       voucher: {
-        selectedCategory: null,
-         options: [
-          { value: null, text: 'Um welchen Gutschein Kategorie handelt es sich' },
-          { value: '1', text: 'Massage' },
-          { value: '2', text: 'Bücher' },
-          { value: '3', text: 'Kultur' },
-          { value: '4', text: 'Basteln' },
-          { value: '5', text: 'Sport' },
-        ],
+
         expiryDate: '',
         name: "",
         price: "",
